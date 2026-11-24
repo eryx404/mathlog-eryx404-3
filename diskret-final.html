@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ДИСКРЕТТІ МАТЕМАТИКА — ФИНАЛ QUIZIZZ (109 СҰРАҚ · ГРАФТАР, PDNF/PCNF, КОМБИНАТОРИКА)</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --surface: #121a2b;
+      --surface-2: #1a253d;
+      --border: #263554;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --primary: #38bdf8;
+      --accent: #a855f7;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --yellow: #facc15;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; }
+    body { background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 64px; overflow-x: hidden; }
+    .container { max-width: 980px; margin: 0 auto; padding: 16px; }
+
+    header {
+      background: rgba(18, 26, 43, 0.94); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); padding: 14px 20px;
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      position: sticky; top: 0; z-index: 100; box-shadow: 0 6px 24px rgba(0,0,0,0.45);
+    }
+    .logo-wrap { display: flex; align-items: center; gap: 12px; }
+    .logo-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: linear-gradient(135deg, #10b981, #0284c7);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1.1rem; color: #fff; flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+    }
+    .logo-title { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.3px; }
+    .logo-sub { font-size: 0.74rem; color: #34d399; font-weight: 700; margin-top: 2px; }
+    .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+    .btn {
+      padding: 8px 14px; border-radius: 10px; font-weight: 700; font-size: 0.84rem;
+      border: 1px solid transparent; cursor: pointer; transition: 0.18s ease;
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: linear-gradient(135deg, #38bdf8, #0ea5e9); color: #05101f; }
+    .btn-primary:hover { filter: brightness(1.08); }
+    .btn-emerald { background: linear-gradient(135deg, #10b981, #059669); color: #022c22; }
+    .btn-emerald:hover { filter: brightness(1.08); }
+    .btn-purple { background: linear-gradient(135deg, #a855f7, #7c3aed); color: #fff; }
+    .btn-purple:hover { filter: brightness(1.08); }
+    .btn-outline { background: var(--surface-2); border-color: var(--border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-warning { background: var(--warning); color: #090d16; }
+    .btn-danger { background: rgba(239, 68, 68, 0.16); border-color: rgba(239, 68, 68, 0.4); color: #fca5a5; }
+    .btn-danger:hover { background: var(--danger); color: #fff; }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 18px 0; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 15px 12px; text-align: center; }
+    .stat-num { font-size: 1.55rem; font-weight: 900; color: #fff; }
+    .stat-lbl { font-size: 0.72rem; color: var(--muted); font-weight: 700; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
+
+    .mode-switch { display: flex; gap: 8px; background: var(--surface); padding: 6px; border-radius: 14px; border: 1px solid var(--border); margin-bottom: 18px; }
+    .mode-btn { flex: 1; padding: 11px 14px; border-radius: 10px; border: 1px solid transparent; background: transparent; color: var(--muted); font-weight: 800; font-size: 0.88rem; cursor: pointer; transition: 0.18s; }
+    .mode-btn.active { background: var(--surface-2); color: #fff; border-color: var(--primary); box-shadow: 0 2px 12px rgba(56, 189, 248, 0.18); }
+
+    .tabs { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px; }
+    .tab-btn { padding: 10px 16px; border-radius: 11px; background: var(--surface); border: 1px solid var(--border); color: var(--muted); font-weight: 800; font-size: 0.85rem; cursor: pointer; white-space: nowrap; transition: 0.18s; }
+    .tab-btn.active { background: var(--primary); color: #04111f; border-color: var(--primary); }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; }
+    .block-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; transition: 0.2s; }
+    .block-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0,0,0,0.35); }
+    .b-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 8px; }
+    .b-badge { font-size: 0.7rem; font-weight: 800; padding: 4px 9px; border-radius: 7px; background: rgba(56,189,248,0.14); color: var(--primary); }
+    .b-count { font-size: 0.74rem; font-weight: 700; color: var(--muted); }
+    .b-title { font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 6px; }
+    .b-desc { font-size: 0.81rem; color: var(--muted); line-height: 1.45; margin-bottom: 14px; flex: 1; }
+    .b-actions { display: flex; gap: 8px; }
+    .b-actions .btn { flex: 1; padding: 9px 10px; font-size: 0.82rem; }
+    .special-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 16px; }
+
+    /* QUIZ VIEW */
+    #quizView { display: none; }
+    .quiz-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 12px 16px; margin-bottom: 12px; }
+    .progress-track { width: 100%; height: 6px; background: var(--surface-2); border-radius: 99px; overflow: hidden; margin-bottom: 16px; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #10b981, #38bdf8); width: 0%; transition: width 0.3s ease; }
+    .streak-pill { background: rgba(245, 158, 11, 0.2); border: 1px solid var(--warning); color: #fde68a; padding: 4px 11px; border-radius: 20px; font-weight: 800; font-size: 0.8rem; }
+    .timer-pill { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 900; font-size: 1rem; color: var(--primary); background: rgba(56,189,248,0.12); padding: 4px 11px; border-radius: 8px; }
+    .timer-pill.danger { color: #fecaca; background: rgba(239,68,68,0.28); animation: pulse 0.8s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+
+    .q-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 24px; margin-bottom: 16px; box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
+    .q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; gap: 10px; flex-wrap: wrap; }
+    .q-tag { background: rgba(16,185,129,0.18); border: 1px solid rgba(16,185,129,0.45); color: #a7f3d0; padding: 4px 10px; border-radius: 8px; font-size: 0.76rem; font-weight: 800; }
+    .q-text { font-size: 1.14rem; font-weight: 700; line-height: 1.55; color: #fff; margin-bottom: 16px; white-space: pre-line; }
+
+    .visual-box {
+      background: #0d1424; border-radius: 12px; padding: 14px; margin-bottom: 18px;
+      display: flex; justify-content: center; align-items: center; overflow-x: auto;
+      border: 1px solid var(--border);
+    }
+    .visual-box.light { background: #ffffff; border: 2px solid #cbd5e1; }
+    .visual-box svg { max-width: 100%; height: auto; display: block; }
+
+    .tt-mini { border-collapse: collapse; font-family: ui-monospace, monospace; font-size: 0.88rem; min-width: 240px; }
+    .tt-mini th, .tt-mini td { border: 1px solid #334155; padding: 6px 14px; text-align: center; }
+    .tt-mini th { background: #1e293b; color: var(--primary); font-weight: 800; }
+    .tt-mini tr.hl-pdnf { background: rgba(16, 185, 129, 0.22); color: #6ee7b7; font-weight: 800; }
+    .tt-mini tr.hl-pcnf { background: rgba(245, 158, 11, 0.2); color: #fde68a; font-weight: 800; }
+
+    .opts-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .opt-btn {
+      background: var(--surface-2); border: 2px solid var(--border); border-radius: 13px;
+      padding: 13px 16px; text-align: left; color: var(--text); font-size: 0.98rem;
+      font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 13px;
+      transition: 0.15s; line-height: 1.4;
+    }
+    .opt-btn:hover:not(:disabled) { border-color: var(--primary); background: #223052; transform: translateY(-1px); }
+    .opt-btn:disabled { cursor: default; }
+    .opt-letter {
+      width: 32px; height: 32px; border-radius: 9px; background: var(--bg);
+      color: var(--primary); font-weight: 900; font-size: 0.88rem; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; border: 1px solid var(--border);
+    }
+    .opt-btn.correct { background: rgba(16, 185, 129, 0.22); border-color: var(--success); color: #fff; }
+    .opt-btn.correct .opt-letter { background: var(--success); color: #022c22; border-color: var(--success); }
+    .opt-btn.wrong { background: rgba(239, 68, 68, 0.22); border-color: var(--danger); color: #fff; }
+    .opt-btn.wrong .opt-letter { background: var(--danger); color: #fff; border-color: var(--danger); }
+
+    .feedback-bar { margin-top: 14px; padding: 13px 16px; border-radius: 12px; font-size: 0.88rem; line-height: 1.5; display: none; }
+    .feedback-bar.ok { background: rgba(16,185,129,0.14); border: 1px solid var(--success); color: #a7f3d0; }
+    .feedback-bar.bad { background: rgba(239,68,68,0.14); border: 1px solid var(--danger); color: #fecaca; }
+    .feedback-exp { margin-top: 6px; color: #e2e8f0; font-weight: 500; font-size: 0.84rem; }
+
+    .nav-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 16px; display: none; }
+    .nav-dots { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; max-height: 145px; overflow-y: auto; }
+    .nav-dot { width: 32px; height: 32px; border-radius: 8px; background: var(--surface-2); border: 1px solid var(--border); color: var(--muted); font-size: 0.76rem; font-weight: 800; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    .nav-dot.cur { border-color: var(--primary); color: #fff; box-shadow: 0 0 0 2px rgba(56,189,248,0.3); }
+    .nav-dot.ok { background: #065f46; border-color: var(--success); color: #fff; }
+    .nav-dot.bad { background: #7f1d1d; border-color: var(--danger); color: #fff; }
+    .nav-dot.flg { box-shadow: inset 0 0 0 2px var(--warning); }
+
+    .quiz-footer { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+
+    #resultView { display: none; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 34px 24px; text-align: center; }
+    .res-score { font-size: 3.4rem; font-weight: 900; background: linear-gradient(135deg, #10b981, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 12px 0; }
+
+    .bank-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+    .search-input { flex: 1; min-width: 220px; padding: 11px 15px; border-radius: 11px; background: var(--surface); border: 1px solid var(--border); color: #fff; font-size: 0.92rem; }
+    .search-input:focus { outline: none; border-color: var(--primary); }
+    .filter-select { padding: 11px 14px; border-radius: 11px; background: var(--surface); border: 1px solid var(--border); color: #fff; font-weight: 700; font-size: 0.85rem; }
+    .bank-item { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 12px; }
+    .bank-ans { display: inline-block; margin-top: 8px; padding: 6px 12px; border-radius: 8px; background: rgba(250, 204, 21, 0.16); border: 1px solid rgba(250, 204, 21, 0.55); color: #fef08a; font-weight: 800; font-size: 0.92rem; }
+    .bank-exp { margin-top: 6px; font-size: 0.8rem; color: var(--muted); }
+
+    .cheat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-bottom: 18px; }
+    .cheat-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px; font-size: 0.83rem; line-height: 1.55; }
+    .cheat-card h4 { color: var(--primary); margin-bottom: 6px; font-size: 0.92rem; }
+
+    #confettiCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 999; }
+
+    @media (max-width: 680px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      header { flex-direction: column; align-items: stretch; }
+      .header-actions { justify-content: space-between; }
+    }
+  </style>
+</head>
+<body>
+<canvas id="confettiCanvas"></canvas>
+
+<header>
+  <div class="logo-wrap">
+    <div class="logo-icon">FIN</div>
+    <div>
+      <div class="logo-title">ДИСКРЕТТІ МАТЕМАТИКА — ФИНАЛ QUIZIZZ</div>
+      <div class="logo-sub">Теоремалар · Графтар · PDNF/PCNF · Заңдар · Комбинаторика · 109 СҰРАҚ</div>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-outline" id="soundBtn" onclick="toggleSound()">🔊 Дыбыс: Қосулы</button>
+    <button class="btn btn-danger" id="errQuickBtn" onclick="startErrors()" style="display:none;">🔄 Қателер (<span id="errQuickNum">0</span>)</button>
+    <button class="btn btn-primary" onclick="showDashboard()">🏠 Мәзір</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- DASHBOARD -->
+  <div id="dashboardView">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--primary)">109</div>
+        <div class="stat-lbl">Барлық сұрақ (4 блок)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="bestExamStat">0/30</div>
+        <div class="stat-lbl">Үздік емтихан (≥24)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--success)" id="masteredStat">0</div>
+        <div class="stat-lbl">Меңгерілген сұрақ</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--danger)" id="errorStat">0</div>
+        <div class="stat-lbl">Қателер банкі</div>
+      </div>
+    </div>
+
+    <div class="mode-switch">
+      <button class="mode-btn active" id="modeGameBtn" onclick="setMode('game')">🎮 Ойын режимі (45с · 🔥 Streak · Дыбыс)</button>
+      <button class="mode-btn" id="modeStudyBtn" onclick="setMode('study')">📚 Жаттау режимі (Таймерсіз · Түсіндірме + Карта)</button>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('blocks', this)">📦 4 Блок (109 сұрақ)</button>
+      <button class="tab-btn" onclick="switchTab('topics', this)">🏷️ 7 Тақырыптық бөлім</button>
+      <button class="tab-btn" onclick="switchTab('exam', this)">🎓 Емтихан (30 сұрақ · 45 мин)</button>
+      <button class="tab-btn" onclick="switchTab('bank', this)">🔍 109 База & Алтын Шпаргалка</button>
+    </div>
+
+    <!-- TAB 1: BLOCKS -->
+    <div id="tab-blocks">
+      <div class="cards-grid" id="blocksGrid"></div>
+      <div class="special-row">
+        <div class="block-card" style="border-color:rgba(168,85,247,0.55)">
+          <div class="b-top"><span class="b-badge" style="background:rgba(168,85,247,0.2);color:#e9d5ff">ГРАФТАР + КОМБИНАТОРИКА</span><span class="b-count">21 сұрақ</span></div>
+          <div class="b-title">🕸️ Графтар теориясы & Комбинаторика</div>
+          <div class="b-desc">SVG граф сызбалары (Эйлер, Гамильтон, Ағаш, Жазық граф) және барлық комбинаторика есептері.</div>
+          <div class="b-actions">
+            <button class="btn btn-purple" onclick="startGraphComb(false)">▶ Бастау</button>
+            <button class="btn btn-outline" onclick="startGraphComb(true)">🔀 Аралас</button>
+          </div>
+        </div>
+        <div class="block-card" style="border-color:rgba(16,185,129,0.55)">
+          <div class="b-top"><span class="b-badge" style="background:rgba(16,185,129,0.2);color:#6ee7b7">ФИНАЛ МАРАФОН</span><span class="b-count">109 сұрақ</span></div>
+          <div class="b-title">⚡ Барлық 109 сұрақ Марафон</div>
+          <div class="b-desc">Дискретті математиканың соңғы базасындағы барлық сұрақтарды бір деммен өтіп шығыңыз.</div>
+          <div class="b-actions">
+            <button class="btn btn-emerald" onclick="startMarathon(false)">▶ Ретімен</button>
+            <button class="btn btn-outline" onclick="startMarathon(true)">🔀 Аралас</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: TOPICS -->
+    <div id="tab-topics" style="display:none">
+      <div class="cards-grid" id="topicsGrid"></div>
+    </div>
+
+    <!-- TAB 3: EXAM -->
+    <div id="tab-exam" style="display:none">
+      <div class="block-card" style="max-width:560px;margin:14px auto;text-align:center;padding:30px">
+        <div style="font-size:2.8rem;margin-bottom:10px">🎓</div>
+        <div class="b-title" style="font-size:1.35rem;margin-bottom:10px">Финалдық Емтихан Симуляторы (30 сұрақ)</div>
+        <div class="b-desc" style="font-size:0.92rem;margin-bottom:20px">
+          109 сұрақтан кездейсоқ 30 сұрақ (графтар, PDNF/PCNF, Буль заңдары, теоремалар, комбинаторика) іріктеледі.
+          Уақыт: <b>45 минут</b>. Өту межесі: <b>24/30 (80%)</b>.
+        </div>
+        <button class="btn btn-primary" style="padding:13px 32px;font-size:1rem" onclick="startExam()">🚀 Емтиханды бастау</button>
+      </div>
+    </div>
+
+    <!-- TAB 4: BANK & CHEATSHEET -->
+    <div id="tab-bank" style="display:none">
+      <div class="cheat-grid">
+        <div class="cheat-card">
+          <h4>📐 Теоремалар (P → Q)</h4>
+          • <b>Converse (кері):</b> Q → P<br>
+          • <b>Inverse (қарама-қарсы):</b> ¬P → ¬Q<br>
+          • <b>Contrapositive:</b> ¬Q → ¬P
+        </div>
+        <div class="cheat-card">
+          <h4>🧩 PDNF vs PCNF (00, 01, 10, 11)</h4>
+          • <b>PDNF (1-лер бойынша):</b> 0 → ¬x, 1 → x; іші ∧, арасы ∨<br>
+          • <b>PCNF (0-дер бойынша):</b> 0 → x, 1 → ¬x; іші ∨, арасы ∧
+        </div>
+        <div class="cheat-card">
+          <h4>🎲 Комбинаторика (Platonus)</h4>
+          • Тәртіп маңызды: <b>Aₙᵏ</b> (Оқушы A₅⁴, басшы A₉², 3 тағам A₇³)<br>
+          • Тәртіп маңызды емес: <b>Cₙᵏ</b> (фильм C₁₀⁴, жеміс C₇², кітап C₁₀³)<br>
+          • Қайталанатын теру: <b>C̄ₙᵏ</b> (гүл C̄₆¹⁰, раушан C̄₄¹⁰⁰, шар C̄₃¹⁰, 12 кітап C̄₁₂⁴)
+        </div>
+      </div>
+
+      <div class="bank-controls">
+        <input type="text" class="search-input" id="bankSearch" placeholder="Сұрақ, PDNF, PCNF, Euler, tree, C₁₀⁴ немесе заң іздеу..." oninput="renderBank()">
+        <select class="filter-select" id="bankFilter" onchange="renderBank()">
+          <option value="all">Барлық 109 сұрақ</option>
+          <option value="theorems">Теоремалар (9)</option>
+          <option value="graphs">Графтар теориясы (10)</option>
+          <option value="classes">Формула түрлері (10)</option>
+          <option value="normal">PDNF / PCNF / DNF / CNF (34)</option>
+          <option value="laws">Заңдар & Толық жүйелер (28)</option>
+          <option value="statements">Пікірлерді формулаға жазу (7)</option>
+          <option value="comb">Комбинаторика (11)</option>
+        </select>
+      </div>
+      <div id="bankCountLabel" style="font-size:0.82rem;color:var(--muted);margin-bottom:10px;font-weight:700"></div>
+      <div id="bankList"></div>
+    </div>
+  </div>
+
+  <!-- QUIZ VIEW -->
+  <div id="quizView">
+    <div class="quiz-bar">
+      <div style="font-weight:800;font-size:0.92rem" id="quizHeaderTitle">Блок 1 · 1 / 29</div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span class="streak-pill" id="streakPill">🔥 0</span>
+        <span class="timer-pill" id="timerPill">⏱ 45с</span>
+        <button class="btn btn-outline" style="padding:5px 10px;font-size:0.78rem" onclick="finishOrQuit()">✕ Аяқтау</button>
+      </div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="q-card">
+      <div class="q-meta">
+        <span class="q-tag" id="qTag">T-1</span>
+        <button class="btn btn-outline" style="padding:4px 10px;font-size:0.78rem" id="flagBtn" onclick="toggleFlag()">🚩 Белгілеу</button>
+      </div>
+      <div class="q-text" id="qText"></div>
+      <div id="qVisualSlot"></div>
+      <div class="opts-grid" id="optsGrid"></div>
+      <div class="feedback-bar" id="feedbackBar"></div>
+    </div>
+
+    <div class="nav-panel" id="navPanel">
+      <div style="font-size:0.78rem;color:var(--muted);font-weight:800">Сұрақтар картасы:</div>
+      <div class="nav-dots" id="navDots"></div>
+    </div>
+
+    <div class="quiz-footer">
+      <button class="btn btn-outline" id="prevBtn" onclick="prevQ()">← Алдыңғы</button>
+      <div style="font-size:0.84rem;color:var(--muted);font-weight:700" id="liveScoreTxt">Дұрыс: 0</div>
+      <button class="btn btn-primary" id="nextBtn" onclick="nextQ()">Келесі →</button>
+    </div>
+  </div>
+
+  <!-- RESULT VIEW -->
+  <div id="resultView">
+    <div style="font-size:3.2rem" id="resEmoji">🏆</div>
+    <h2 style="margin-top:8px;font-size:1.5rem" id="resTitle">Тест аяқталды!</h2>
+    <div class="res-score" id="resScore">28 / 30</div>
+    <p style="color:var(--muted);max-width:500px;margin:0 auto 22px;line-height:1.5" id="resDesc"></p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="showDashboard()">🏠 Басты мәзірге</button>
+      <button class="btn btn-warning" id="resRetryWrong" style="display:none" onclick="retrySessionWrong()">🔄 Қателерді қайталау</button>
+      <button class="btn btn-outline" onclick="restartCurrent()">↻ Қайта бастау</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const BLOCKS = [{"id": 1, "badge": "1-БЛОК · №1–29", "title": "1-Блок: Теоремалар, Графтар & Формулалар", "desc": "Кері/қарама-қарсы теоремалар (9), Графтар теориясы SVG сызбаларымен (10), Тавтология/Қайшылық (10).", "start": 0, "end": 29}, {"id": 2, "badge": "2-БЛОК · №30–59", "title": "2-Блок: PDNF & PCNF (Барлық кестелер)", "desc": "Барлық 14 екі айнымалылы функцияның PDNF & PCNF формалары және x→y, x↔y ақиқат кестелерімен.", "start": 29, "end": 59}, {"id": 3, "badge": "3-БЛОК · №60–87", "title": "3-Блок: Толық жүйелер & Буль заңдары", "desc": "Функционалды толық жүйелер (5), формула ықшамдау (4) және Буль алгебрасының 19 негізгі заңы.", "start": 59, "end": 87}, {"id": 4, "badge": "4-БЛОК · №88–109", "title": "4-Блок: Пікірлер, DNF/CNF & Комбинаторика", "desc": "Теңсіздіктерді логикаға аудару (7), DNF/CNF түрлендіру (4) және Комбинаторика формулалары (11).", "start": 87, "end": 109}];
+const DB = [{"id": 1, "tag": "T-1", "topic": "theorems", "q": "Find the converse theorem to the following theorem: If discriminant of a quadratic equation is less than 0, then it will not have real roots.", "opts": ["If a quadratic equation has real roots, then its discriminant is less than 0", "If a quadratic equation has no real roots, then its discriminant is less than 0", "If discriminant of quadratic equation is not less than 0, then it will have real roots", "If quadratic equation has real roots, then its discriminant is not less than 0"], "ans": 1, "exp": "Converse (кері теорема): P → Q орнына Q → P болады."}, {"id": 2, "tag": "T-2", "topic": "theorems", "q": "Find the inverse theorem to the following theorem: If discriminant of quadratic equation is less than 0, then it will not have real roots.", "opts": ["If discriminant of quadratic equation is less than 0, then it will have real roots", "If discriminant of quadratic equation is not less than 0, then it will have real roots", "If a quadratic equation has no real roots, then its discriminant is less than 0", "If quadratic equation has real roots, then its discriminant is not less than 0"], "ans": 1, "exp": "Inverse (қарама-қарсы теорема): P → Q орнына ¬P → ¬Q болады."}, {"id": 3, "tag": "T-3", "topic": "theorems", "q": "Find the contrapositive theorem of the following theorem: If discriminant of quadratic equation is less than 0, then it will not have real roots.", "opts": ["If a quadratic equation has no real roots, then its discriminant is less than 0", "If quadratic equation has no real roots, then its discriminant is not less than 0", "If quadratic equation has real roots, then its discriminant is not less than 0", "If discriminant of quadratic equation is not less than 0, then it will have real roots"], "ans": 2, "exp": "Contrapositive (керісіне қарама-қарсы): P → Q орнына ¬Q → ¬P болады."}, {"id": 4, "tag": "T-4", "topic": "theorems", "q": "Find the converse theorem to the following theorem: If triangle is an isosceles, then its two sides are equal.", "opts": ["If triangle’s two sides are equal, then it is an isosceles triangle", "If triangle’s two sides are equal, then it is not an isosceles triangle", "If triangle’s two sides are not equal, then it is not an isosceles triangle", "If triangle is not an isosceles, then its two sides are not equal"], "ans": 0, "exp": "Converse (Q → P): Егер екі қабырғасы тең болса, онда үшбұрыш теңбүйірлі."}, {"id": 5, "tag": "T-5", "topic": "theorems", "q": "Find the inverse theorem to the following theorem: If triangle is an isosceles, then its two sides are equal.", "opts": ["If triangle is an isosceles, then its two sides are not equal", "If triangle’s two sides are equal, then it is an isosceles triangle", "If triangle is not an isosceles, then its two sides are not equal", "If triangle’s two sides are not equal, then it is not an isosceles triangle"], "ans": 2, "exp": "Inverse (¬P → ¬Q): Егер үшбұрыш теңбүйірлі болмаса, екі қабырғасы тең емес."}, {"id": 6, "tag": "T-6", "topic": "theorems", "q": "Find the contrapositive theorem of the following theorem: If triangle is an isosceles, then its two sides are equal.", "opts": ["If triangle’s two sides are not equal, then it is an isosceles triangle", "If triangle’s two sides are equal, then it is an isosceles triangle", "If triangle’s two sides are not equal, then it is not an isosceles triangle", "If triangle is not an isosceles, then its two sides are not equal"], "ans": 2, "exp": "Contrapositive (¬Q → ¬P): Егер екі қабырғасы тең болмаса, ол теңбүйірлі емес."}, {"id": 7, "tag": "T-7", "topic": "theorems", "q": "Find the converse theorem to the following theorem: If the sum of the digits of natural number can be divided by 3, then this number can also be divided by 3.", "opts": ["If natural number can not be divided by 3, then the sum of the digits of this number can not be divided by 3.", "If the sum of the digits of natural number can not be divided by 3, then this number can not be divided by 3.", "If natural number can be divided by 3, then the sum of the digits of this number also can be divided by 3.", "If natural number can be divided by 3, then the sum of the digits can not be divided by 3."], "ans": 2, "exp": "Converse (Q → P): Шарт пен қорытынды орын ауыстырады."}, {"id": 8, "tag": "T-8", "topic": "theorems", "q": "Find the inverse theorem to the following theorem: If the sum of the digits of natural number can be divided by 3, then this number can also be divided by 3.", "opts": ["If natural number can not be divided by 3, then the sum of the digits of this number can not be divided by 3.", "If the sum of the digits can not be divided by 3, then this number can be divided by 3.", "If natural number can be divided by 3, then the sum of the digits of this number also can be divided by 3.", "If the sum of the digits of natural number can not be divided by 3, then this number can not be divided by 3."], "ans": 3, "exp": "Inverse (¬P → ¬Q): Екі бөлік те терістеледі, орындары сақталады."}, {"id": 9, "tag": "T-9", "topic": "theorems", "q": "Find the contrapositive theorem of the following theorem: If the sum of the digits of natural number can be divided by 3, then this natural number can also be divided by 3.", "opts": ["If the sum of the digits of natural number can not be divided by 3, then this number can not be divided by 3.", "If natural number can not be divided by 3, then the sum of the digits of this number can not be divided by 3.", "If natural number can not be divided by 3, then the sum of the digits can be divided by 3.", "If natural number can be divided by 3, then the sum of the digits of this number also can be divided by 3."], "ans": 1, "exp": "Contrapositive (¬Q → ¬P): Орындары ауысады және екеуі де терістеледі."}, {"id": 10, "tag": "G-1", "topic": "graphs", "q": "A walk in a graph is a path, if …", "opts": ["cycle visits every edge exactly once", "initial and final vertices are same and edges don’t repeat", "it is connected and there is no cycle", "it visits every vertex once and edges don’t repeat"], "ans": 3, "exp": "Path (жол) — төбелері мен қабырғалары қайталанбайтын бағыт.", "visual": {"type": "graph", "key": "path"}}, {"id": 11, "tag": "G-2", "topic": "graphs", "q": "Graph path is cyclic, if …", "opts": ["it is connected and there is no cycle", "it can be embedded in the plane without edge crossings", "it visits every vertex once and edges don’t repeat", "initial and final vertices are same and edges don’t repeat"], "ans": 3, "exp": "Cyclic (циклдік жол) — бастапқы және соңғы төбелері сәйкес келеді, қабырғалар қайталанбайды.", "visual": {"type": "graph", "key": "cyclic"}}, {"id": 12, "tag": "G-3", "topic": "graphs", "q": "Graph path is simple cyclic, if …", "opts": ["initial and final vertices are different", "cycle visits every edge twice", "its vertices and edges don’t repeat", "there are no edges in the graph"], "ans": 2, "exp": "Simple cycle (қарапайым цикл) — бастапқы/соңғы төбеден басқа төбелер мен қабырғалар қайталанбайды.", "visual": {"type": "graph", "key": "simple_cycle"}}, {"id": 13, "tag": "G-4", "topic": "graphs", "q": "Graph path is Eulerian, if …", "opts": ["it is connected and there is no cycle", "it can be embedded in the plane", "path’s initial and final vertices are same and edges don’t repeat", "path’s initial and final vertices are same, edges and vertices don’t repeat"], "ans": 2, "exp": "Емтихан кілті бойынша: Eulerian path — бастапқы және соңғы төбелері бірдей, қабырғалары қайталанбайды.", "visual": {"type": "graph", "key": "euler"}}, {"id": 14, "tag": "G-5", "topic": "graphs", "q": "Graph path is Hamiltonian, if …", "opts": ["it is disconnected and has no cycles", "cycle visits every edge exactly once", "path’s initial and final vertices are same and edges don’t repeat", "path’s initial and final vertices are same, edges and vertices don’t repeat"], "ans": 3, "exp": "Hamiltonian (Гамильтондық) — әр төбені дәл бір рет өтеді (қабырға да, төбе де қайталанбайды).", "visual": {"type": "graph", "key": "hamilton"}}, {"id": 15, "tag": "G-6", "topic": "graphs", "q": "Graph path is Eulerian cycle, if …", "opts": ["it has no repeated vertices and skips half the edges", "it is connected and there is no cycle", "cycle visits every edge exactly once", "cycle visits every vertex exactly once"], "ans": 2, "exp": "Eulerian cycle (Эйлер циклі) — графтың барлық қабырғаларын дәл бір рет айналып өтетін цикл.", "visual": {"type": "graph", "key": "euler"}}, {"id": 16, "tag": "G-7", "topic": "graphs", "q": "Graph is tree, if …", "opts": ["every pair of vertices has multiple edges", "it can be embedded in the plane with cycles", "it is connected and there is no cycle", "it contains an Eulerian cycle"], "ans": 2, "exp": "Tree (ағаш) — байланысқан және циклі жоқ граф.", "visual": {"type": "graph", "key": "tree"}}, {"id": 17, "tag": "G-8", "topic": "graphs", "q": "An Eulerian graph is …", "opts": ["a graph that can be embedded in the plane", "a graph that is connected and has no cycle", "a graph with at least one isolated vertex", "a graph containing an Eulerian cycle"], "ans": 3, "exp": "Eulerian graph (Эйлер графы) — құрамында Эйлер циклі бар граф (барлық төбе дәрежелері жұп).", "visual": {"type": "graph", "key": "euler"}}, {"id": 18, "tag": "G-9", "topic": "graphs", "q": "A planar graph is …", "opts": ["a graph where every vertex connects to every other vertex with crossings", "a graph that is connected and has no cycle", "a graph that can be embedded in the plane", "a graph containing an Eulerian cycle"], "ans": 2, "exp": "Planar graph (жазық граф) — қабырғалары қиылыспайтындай етіп жазықтыққа салуға болатын граф.", "visual": {"type": "graph", "key": "planar"}}, {"id": 19, "tag": "G-10", "topic": "graphs", "q": "Graph is connected, if …", "opts": ["it's possible to get from every vertex in the graph to every other vertex through a series of edges", "every vertex has degree 1", "it can be embedded in the plane without crossings", "it has no cycles at all"], "ans": 0, "exp": "Connected graph (байланысқан граф) — кез келген екі төбенің арасында жол бар.", "visual": {"type": "graph", "key": "connected"}}, {"id": 20, "tag": "C-1", "topic": "classes", "q": "A formula which is always true for every value of its propositional variables is called…", "opts": ["contradiction", "satisfiable", "tautology", "falsifiable"], "ans": 2, "exp": "Барлық мәндерде 1 (True) беретін формула — тавтология (tautology)."}, {"id": 21, "tag": "C-2", "topic": "classes", "q": "A formula which is true for some values of its propositional variables is called…", "opts": ["satisfiable", "tautology", "falsifiable", "contradiction"], "ans": 0, "exp": "Кемінде бір жиынтықта 1 (True) болатын формула — орындалатын (satisfiable)."}, {"id": 22, "tag": "C-3", "topic": "classes", "q": "A formula which is false for some values of its propositional variables is called…", "opts": ["tautology", "falsifiable", "satisfiable", "contradiction"], "ans": 1, "exp": "Кемінде бір жиынтықта 0 (False) болатын формула — теріске шығарылатын (falsifiable / refutable)."}, {"id": 23, "tag": "C-4", "topic": "classes", "q": "A formula which is always false for every value of its propositional variables is called…", "opts": ["contradiction", "satisfiable", "falsifiable", "tautology"], "ans": 0, "exp": "Барлық мәндерде 0 (False) беретін формула — қайшылық (contradiction)."}, {"id": 24, "tag": "C-5", "topic": "classes", "q": "Formula is called satisfiable, if it is…", "opts": ["true for some value of its propositional variables", "always true for every value of its propositional variables", "always false for every value of its propositional variables", "false for some value of its propositional variables"], "ans": 0, "exp": "Satisfiable — кейбір мәндерде ақиқат."}, {"id": 25, "tag": "C-6", "topic": "classes", "q": "Formula is called falsifiable, if it is…", "opts": ["always true for every value of its propositional variables", "false for some value of its propositional variables", "always false for every value of its propositional variables", "true for some value of its propositional variables"], "ans": 1, "exp": "Falsifiable — кейбір мәндерде жалған."}, {"id": 26, "tag": "C-7", "topic": "classes", "q": "Formula is unsatisfiable / contradiction, if it is…", "opts": ["always false for every value of its propositional variables", "false for some value of its propositional variables", "always true for every value of its propositional variables", "true for some value of its propositional variables"], "ans": 0, "exp": "Unsatisfiable / contradiction — әрқашан жалған."}, {"id": 27, "tag": "C-8", "topic": "classes", "q": "Formula X ∧ ¬X is...", "opts": ["tautology", "equivalent to X", "contradiction", "satisfiable"], "ans": 2, "exp": "X ∧ ¬X әрқашан 0-ге тең (қайшылық / contradiction)."}, {"id": 28, "tag": "C-9", "topic": "classes", "q": "Formula X ∨ ¬X is...", "opts": ["contradiction", "tautology", "falsifiable", "equivalent to 0"], "ans": 1, "exp": "X ∨ ¬X әрқашан 1-ге тең (тавтология / tautology)."}, {"id": 29, "tag": "C-10", "topic": "classes", "q": "Formula X → ¬X is...", "opts": ["contradiction", "satisfiable", "equivalent to 1", "tautology"], "ans": 1, "exp": "X = 0 болғанда 0 → 1 = 1, ал X = 1 болғанда 1 → 0 = 0. Сондықтан орындалатын (satisfiable)."}, {"id": 30, "tag": "PDNF-1", "topic": "normal", "q": "The value of Boolean function in truth table is 0001. Find PDNF of this function:", "opts": ["(x ∧ y)", "(¬x ∧ ¬y) ∨ (x ∧ y)", "(x ∨ y) ∧ (x ∨ ¬y) ∧ (¬x ∨ y)", "(¬x ∧ ¬y) ∨ (¬x ∧ y) ∨ (x ∧ ¬y)"], "ans": 0, "exp": "PDNF (ЖДҚФ) үшін кестедегі 1-лер (11) алынады: 0 → терістеу (¬), 1 → айнымалының өзі, іші ∧, арасы ∨.", "visual": {"type": "tt2", "bits": "0001", "mode": "PDNF"}}, {"id": 31, "tag": "PDNF-2", "topic": "normal", "q": "The value of Boolean function in truth table is 0010. Find PDNF of this function:", "opts": ["(¬x ∧ ¬y) ∨ (¬x ∧ y) ∨ (x ∧ y)", "(¬x ∧ ¬y) ∨ (x ∧ ¬y)", "(x ∧ ¬y)", "(x ∨ y) ∧ (x ∨ ¬y) ∧ (¬x ∨ ¬y)"], "ans": 2, "exp": "PDNF (ЖДҚФ) үшін кестедегі 1-лер (10) алынады: 0 → терістеу (¬), 1 → айнымалының өзі, іші ∧, арасы ∨.", "visual": {"type": "tt2", "bits": "0010", "mode": "PDNF"}}, {"id": 32, "tag": "PDNF-3", "topic": "normal", "q": "The value of Boolean function in truth table is 0011. Find PDNF of this function:", "opts": ["(x ∨ y) ∧ (x ∨ ¬y)", "(¬x ∧ ¬y) ∨ (¬x ∧ y)", "(¬x ∧ ¬y) ∨ (x ∧ ¬y) ∨ (x ∧ y)", "(x ∧ ¬y) ∨ (x ∧ y)"], "ans": 3, "exp": "PDNF (ЖДҚФ) үшін кестедегі 1-лер (10, 11) алынады: 0 → терістеу (¬), 1 → айнымалының өзі, іші ∧, арасы ∨.", "visual": {"type": "tt2", "bits": "0011", "mode": "PDNF"}}, {"id": 33, "tag": "PDNF-4", "topic": "normal", "q": "The value of Boolean function in truth table is 0100. Find PDNF of this function:", "opts": ["(x ∨ y) ∧ (¬x ∨ y) ∧ (¬x ∨ ¬y)", "(¬x ∧ ¬y) ∨ (x ∧ ¬y) ∨ (x ∧ y)", "(¬x ∧ ¬y) ∨ (¬x ∧ y)", "(¬x ∧ y)"], "ans": 3, "exp": "PDNF (ЖДҚФ) үшін кестедегі 1-лер (01) алынады: 0 → терістеу (¬), 1 → айнымалының өзі, іші ∧, арасы ∨.", "visual": {"type": "tt2", "bits": "0100", "mode": "PDNF"}}, {"id": 34, "tag": "PDNF-5", "topic": "normal", "q": "The value of Boolean function in truth table is 0101. Find PDNF of this function:", "opts": ["(x ∨ y) ∧ (¬x ∨ y)", "(¬x ∧ ¬y) ∨ (¬x ∧ y) ∨ (x ∧ y)", "(¬x ∧ y) ∨ (x ∧ y)", "(¬x ∧ ¬y) ∨ (x ∧ ¬y)"], "ans": 2, "exp": "PDNF (ЖДҚФ) үшін кестедегі 1-лер (01, 11) алынады: 0 → терістеу (¬), 1 → айнымалының өзі, іші ∧, арасы ∨.", "visual": {"type": "tt2", "bits": "0101", "mode": "PDNF"}}, {"id": 35, "tag": "PDNF-6", "topic": "normal", "q": "The value of Boolean function in truth table is 0110. Find PDNF of this function:", "opts": ["(¬x ∧ ¬y) ∨ (¬x ∧ y) ∨ (x ∧ ¬y)", "(¬x ∧ ¬y) ∨ (x ∧ y)", "(¬x ∧ y) ∨ (x ∧ ¬y)", "(x ∨ y) ∧ (¬x ∨ ¬y)"], "ans": 2, "exp": "PDNF (ЖДҚФ) үшін кестедегі 1-лер (01, 10) алынады: 0 → терістеу (¬), 1 → айнымалының өзі, іші ∧, арасы ∨.", "visual": {"type": "tt2", "bits": "0110", "mode": "PDNF"}}, {"id": 36, "tag": "PDNF-7", "topic": "normal", "q": "The value of Boolean function in truth table is 0111. Find PDNF of this function:", "opts": ["(x ∧ ¬y) ∨ (x ∧ y)", "(x ∨ y)", "(¬x ∧ ¬y)", "(¬x ∧ y) ∨ (x ∧ ¬y) ∨ (x ∧ y)"], "ans": 3, "exp": "PDNF (ЖДҚФ) үшін кестедегі 1-лер (01, 10, 11) алынады: 0 → терістеу (¬), 1 → айнымалының өзі, іші ∧, арасы ∨.", "visual": {"type": "tt2", "bits": "0111", "mode": "PDNF"}}, {"id": 37, "tag": "PDNF-8", "topic": "normal", "q": "The value of Boolean function in truth table is 1000. Find PDNF of this function:", "opts": ["(¬x ∧ ¬y)", "(x ∨ ¬y) ∧ (¬x ∨ y) ∧ (¬x ∨ ¬y)", "(¬x ∧ ¬y) ∨ (¬x ∧ y)", "(¬x ∧ y) ∨ (x ∧ ¬y) ∨ (x ∧ y)"], "ans": 0, "exp": "PDNF (ЖДҚФ) үшін кестедегі 1-лер (00) алынады: 0 → терістеу (¬), 1 → айнымалының өзі, іші ∧, арасы ∨.", "visual": {"type": "tt2", "bits": "1000", "mode": "PDNF"}}, {"id": 38, "tag": "PDNF-9", "topic": "normal", "q": "The value of Boolean function in truth table is 1001. Find PDNF of this function:", "opts": ["(¬x ∧ y) ∨ (x ∧ ¬y)", "(¬x ∧ ¬y) ∨ (x ∧ y)", "(x ∧ y)", "(x ∨ ¬y) ∧ (¬x ∨ y)"], "ans": 1, "exp": "PDNF (ЖДҚФ) үшін кестедегі 1-лер (00, 11) алынады: 0 → терістеу (¬), 1 → айнымалының өзі, іші ∧, арасы ∨.", "visual": {"type": "tt2", "bits": "1001", "mode": "PDNF"}}, {"id": 39, "tag": "PDNF-10", "topic": "normal", "q": "The value of Boolean function in truth table is 1010. Find PDNF of this function:", "opts": ["(x ∨ ¬y) ∧ (¬x ∨ ¬y)", "(x ∧ ¬y)", "(¬x ∧ ¬y) ∨ (x ∧ ¬y)", "(¬x ∧ y) ∨ (x ∧ y)"], "ans": 2, "exp": "PDNF (ЖДҚФ) үшін кестедегі 1-лер (00, 10) алынады: 0 → терістеу (¬), 1 → айнымалының өзі, іші ∧, арасы ∨.", "visual": {"type": "tt2", "bits": "1010", "mode": "PDNF"}}, {"id": 40, "tag": "PDNF-11", "topic": "normal", "q": "The value of Boolean function in truth table is 1011. Find PDNF of this function:", "opts": ["(¬x ∧ y)", "(x ∨ ¬y)", "(x ∧ ¬y) ∨ (x ∧ y)", "(¬x ∧ ¬y) ∨ (x ∧ ¬y) ∨ (x ∧ y)"], "ans": 3, "exp": "PDNF (ЖДҚФ) үшін кестедегі 1-лер (00, 10, 11) алынады: 0 → терістеу (¬), 1 → айнымалының өзі, іші ∧, арасы ∨.", "visual": {"type": "tt2", "bits": "1011", "mode": "PDNF"}}, {"id": 41, "tag": "PDNF-12", "topic": "normal", "q": "The value of Boolean function in truth table is 1100. Find PDNF of this function:", "opts": ["(¬x ∧ ¬y) ∨ (¬x ∧ y)", "(x ∧ ¬y) ∨ (x ∧ y)", "(¬x ∧ y)", "(¬x ∨ y) ∧ (¬x ∨ ¬y)"], "ans": 0, "exp": "PDNF (ЖДҚФ) үшін кестедегі 1-лер (00, 01) алынады: 0 → терістеу (¬), 1 → айнымалының өзі, іші ∧, арасы ∨.", "visual": {"type": "tt2", "bits": "1100", "mode": "PDNF"}}, {"id": 42, "tag": "PDNF-13", "topic": "normal", "q": "The value of Boolean function in truth table is 1101. Find PDNF of this function:", "opts": ["(¬x ∨ y)", "(x ∧ ¬y)", "(¬x ∧ y) ∨ (x ∧ y)", "(¬x ∧ ¬y) ∨ (¬x ∧ y) ∨ (x ∧ y)"], "ans": 3, "exp": "PDNF (ЖДҚФ) үшін кестедегі 1-лер (00, 01, 11) алынады: 0 → терістеу (¬), 1 → айнымалының өзі, іші ∧, арасы ∨.", "visual": {"type": "tt2", "bits": "1101", "mode": "PDNF"}}, {"id": 43, "tag": "PDNF-14", "topic": "normal", "q": "The value of Boolean function in truth table is 1110. Find PDNF of this function:", "opts": ["(x ∧ y)", "(¬x ∧ y) ∨ (x ∧ ¬y)", "(¬x ∨ ¬y)", "(¬x ∧ ¬y) ∨ (¬x ∧ y) ∨ (x ∧ ¬y)"], "ans": 3, "exp": "PDNF (ЖДҚФ) үшін кестедегі 1-лер (00, 01, 10) алынады: 0 → терістеу (¬), 1 → айнымалының өзі, іші ∧, арасы ∨.", "visual": {"type": "tt2", "bits": "1110", "mode": "PDNF"}}, {"id": 44, "tag": "PDNF-15", "topic": "normal", "q": "Find PDNF of this formula: x → y", "opts": ["(x ∧ ¬y) ∨ (x ∧ y) ∨ (¬x ∧ y)", "(¬x ∨ y) ∧ (¬x ∨ ¬y) ∧ (x ∨ y)", "(x ∧ ¬y)", "(¬x ∧ y) ∨ (¬x ∧ ¬y) ∨ (x ∧ y)"], "ans": 3, "exp": "x → y ақиқат кестесі: 1101 (00→1, 01→1, 10→0, 11→1). 1-лер бойынша: (¬x ∧ ¬y) ∨ (¬x ∧ y) ∨ (x ∧ y).", "visual": {"type": "tt2", "bits": "1101", "mode": "PDNF"}}, {"id": 45, "tag": "PCNF-1", "topic": "normal", "q": "The value of Boolean function in truth table is 0001. Find PCNF of this function:", "opts": ["(x ∧ y)", "(x ∨ y) ∧ (x ∨ ¬y) ∧ (¬x ∨ y)", "(x ∨ y) ∧ (x ∨ ¬y)", "(¬x ∨ ¬y)"], "ans": 1, "exp": "PCNF (ЖКҚФ) үшін кестедегі 0-дер (00, 01, 10) алынады: 0 → айнымалы, 1 → терістеу (¬), іші ∨, арасы ∧.", "visual": {"type": "tt2", "bits": "0001", "mode": "PCNF"}}, {"id": 46, "tag": "PCNF-2", "topic": "normal", "q": "The value of Boolean function in truth table is 0010. Find PCNF of this function:", "opts": ["(x ∨ y) ∧ (x ∨ ¬y) ∧ (¬x ∨ ¬y)", "(x ∧ ¬y)", "(¬x ∨ y)", "(x ∨ y) ∧ (x ∨ ¬y)"], "ans": 0, "exp": "PCNF (ЖКҚФ) үшін кестедегі 0-дер (00, 01, 11) алынады: 0 → айнымалы, 1 → терістеу (¬), іші ∨, арасы ∧.", "visual": {"type": "tt2", "bits": "0010", "mode": "PCNF"}}, {"id": 47, "tag": "PCNF-3", "topic": "normal", "q": "The value of Boolean function in truth table is 0011. Find PCNF of this function:", "opts": ["(x ∨ y) ∧ (x ∨ ¬y) ∧ (¬x ∨ ¬y)", "(¬x ∨ y) ∧ (¬x ∨ ¬y)", "(x ∨ y) ∧ (x ∨ ¬y)", "(x ∧ ¬y) ∨ (x ∧ y)"], "ans": 2, "exp": "PCNF (ЖКҚФ) үшін кестедегі 0-дер (00, 01) алынады: 0 → айнымалы, 1 → терістеу (¬), іші ∨, арасы ∧.", "visual": {"type": "tt2", "bits": "0011", "mode": "PCNF"}}, {"id": 48, "tag": "PCNF-4", "topic": "normal", "q": "The value of Boolean function in truth table is 0100. Find PCNF of this function:", "opts": ["(x ∨ y) ∧ (¬x ∨ y) ∧ (¬x ∨ ¬y)", "(¬x ∧ y)", "(x ∨ y) ∧ (¬x ∨ y)", "(x ∨ ¬y)"], "ans": 0, "exp": "PCNF (ЖКҚФ) үшін кестедегі 0-дер (00, 10, 11) алынады: 0 → айнымалы, 1 → терістеу (¬), іші ∨, арасы ∧.", "visual": {"type": "tt2", "bits": "0100", "mode": "PCNF"}}, {"id": 49, "tag": "PCNF-5", "topic": "normal", "q": "The value of Boolean function in truth table is 0101. Find PCNF of this function:", "opts": ["(x ∨ ¬y) ∧ (¬x ∨ ¬y)", "(¬x ∧ y) ∨ (x ∧ y)", "(x ∨ y) ∧ (¬x ∨ y)", "(x ∨ y) ∧ (¬x ∨ y) ∧ (¬x ∨ ¬y)"], "ans": 2, "exp": "PCNF (ЖКҚФ) үшін кестедегі 0-дер (00, 10) алынады: 0 → айнымалы, 1 → терістеу (¬), іші ∨, арасы ∧.", "visual": {"type": "tt2", "bits": "0101", "mode": "PCNF"}}, {"id": 50, "tag": "PCNF-6", "topic": "normal", "q": "The value of Boolean function in truth table is 0110. Find PCNF of this function:", "opts": ["(x ∨ y)", "(x ∨ ¬y) ∧ (¬x ∨ y)", "(x ∨ y) ∧ (¬x ∨ ¬y)", "(¬x ∧ y) ∨ (x ∧ ¬y)"], "ans": 2, "exp": "PCNF (ЖКҚФ) үшін кестедегі 0-дер (00, 11) алынады: 0 → айнымалы, 1 → терістеу (¬), іші ∨, арасы ∧.", "visual": {"type": "tt2", "bits": "0110", "mode": "PCNF"}}, {"id": 51, "tag": "PCNF-7", "topic": "normal", "q": "The value of Boolean function in truth table is 0111. Find PCNF of this function:", "opts": ["(x ∨ y) ∧ (¬x ∨ ¬y)", "(¬x ∧ y) ∨ (x ∧ ¬y) ∨ (x ∧ y)", "(x ∨ ¬y) ∧ (¬x ∨ y) ∧ (¬x ∨ ¬y)", "(x ∨ y)"], "ans": 3, "exp": "PCNF (ЖКҚФ) үшін кестедегі 0-дер (00) алынады: 0 → айнымалы, 1 → терістеу (¬), іші ∨, арасы ∧.", "visual": {"type": "tt2", "bits": "0111", "mode": "PCNF"}}, {"id": 52, "tag": "PCNF-8", "topic": "normal", "q": "The value of Boolean function in truth table is 1000. Find PCNF of this function:", "opts": ["(x ∨ y)", "(¬x ∧ ¬y)", "(x ∨ ¬y) ∧ (¬x ∨ y)", "(x ∨ ¬y) ∧ (¬x ∨ y) ∧ (¬x ∨ ¬y)"], "ans": 3, "exp": "PCNF (ЖКҚФ) үшін кестедегі 0-дер (01, 10, 11) алынады: 0 → айнымалы, 1 → терістеу (¬), іші ∨, арасы ∧.", "visual": {"type": "tt2", "bits": "1000", "mode": "PCNF"}}, {"id": 53, "tag": "PCNF-9", "topic": "normal", "q": "The value of Boolean function in truth table is 1001. Find PCNF of this function:", "opts": ["(x ∨ ¬y) ∧ (¬x ∨ y) ∧ (¬x ∨ ¬y)", "(¬x ∧ ¬y) ∨ (x ∧ y)", "(x ∨ y) ∧ (¬x ∨ ¬y)", "(x ∨ ¬y) ∧ (¬x ∨ y)"], "ans": 3, "exp": "PCNF (ЖКҚФ) үшін кестедегі 0-дер (01, 10) алынады: 0 → айнымалы, 1 → терістеу (¬), іші ∨, арасы ∧. (Назар аударыңыз: бастапқы docx файлында 1001 үшін көшіру қатесі болған, мұнда математикалық дұрыс PCNF көрсетілді!)", "visual": {"type": "tt2", "bits": "1001", "mode": "PCNF"}}, {"id": 54, "tag": "PCNF-10", "topic": "normal", "q": "The value of Boolean function in truth table is 1010. Find PCNF of this function:", "opts": ["(¬x ∧ ¬y) ∨ (x ∧ ¬y)", "(x ∨ y) ∧ (¬x ∨ y)", "(x ∨ ¬y) ∧ (¬x ∨ ¬y)", "(x ∨ ¬y)"], "ans": 2, "exp": "PCNF (ЖКҚФ) үшін кестедегі 0-дер (01, 11) алынады: 0 → айнымалы, 1 → терістеу (¬), іші ∨, арасы ∧. (Бастапқы docx файлындағы қате түзетілді; math log.docx №38-де де дәл осы дұрыс жауап тұр!)", "visual": {"type": "tt2", "bits": "1010", "mode": "PCNF"}}, {"id": 55, "tag": "PCNF-11", "topic": "normal", "q": "The value of Boolean function in truth table is 1011. Find PCNF of this function:", "opts": ["(x ∨ ¬y)", "(x ∨ y) ∧ (¬x ∨ y) ∧ (¬x ∨ ¬y)", "(x ∨ ¬y) ∧ (¬x ∨ ¬y)", "(¬x ∧ ¬y) ∨ (x ∧ ¬y) ∨ (x ∧ y)"], "ans": 0, "exp": "PCNF (ЖКҚФ) үшін кестедегі 0-дер (01) алынады: 0 → айнымалы, 1 → терістеу (¬), іші ∨, арасы ∧. (Бастапқы docx файлындағы қате түзетілді; math log.docx №93-те де дәл осы (x ∨ ¬y) жауабы тұр!)", "visual": {"type": "tt2", "bits": "1011", "mode": "PCNF"}}, {"id": 56, "tag": "PCNF-12", "topic": "normal", "q": "The value of Boolean function in truth table is 1100. Find PCNF of this function:", "opts": ["(¬x ∨ y)", "(x ∨ y) ∧ (x ∨ ¬y)", "(¬x ∧ ¬y) ∨ (¬x ∧ y)", "(¬x ∨ y) ∧ (¬x ∨ ¬y)"], "ans": 3, "exp": "PCNF (ЖКҚФ) үшін кестедегі 0-дер (10, 11) алынады: 0 → айнымалы, 1 → терістеу (¬), іші ∨, арасы ∧. (Бастапқы docx файлындағы қате түзетілді: 0-дер 10 және 11 жолдарында.)", "visual": {"type": "tt2", "bits": "1100", "mode": "PCNF"}}, {"id": 57, "tag": "PCNF-13", "topic": "normal", "q": "The value of Boolean function in truth table is 1101. Find PCNF of this function:", "opts": ["(¬x ∨ y)", "(¬x ∨ y) ∧ (¬x ∨ ¬y)", "(¬x ∧ ¬y) ∨ (¬x ∧ y) ∨ (x ∧ y)", "(x ∨ y) ∧ (x ∨ ¬y) ∧ (¬x ∨ ¬y)"], "ans": 0, "exp": "PCNF (ЖКҚФ) үшін кестедегі 0-дер (10) алынады: 0 → айнымалы, 1 → терістеу (¬), іші ∨, арасы ∧. (Бастапқы docx файлындағы қате түзетілді: жалғыз 0 тек 10 жолында → (¬x ∨ y).)", "visual": {"type": "tt2", "bits": "1101", "mode": "PCNF"}}, {"id": 58, "tag": "PCNF-14", "topic": "normal", "q": "The value of Boolean function in truth table is 1110. Find PCNF of this function:", "opts": ["(x ∨ y) ∧ (x ∨ ¬y) ∧ (¬x ∨ y)", "(¬x ∧ ¬y) ∨ (¬x ∧ y) ∨ (x ∧ ¬y)", "(¬x ∨ ¬y)", "(¬x ∨ y) ∧ (¬x ∨ ¬y)"], "ans": 2, "exp": "PCNF (ЖКҚФ) үшін кестедегі 0-дер (11) алынады: 0 → айнымалы, 1 → терістеу (¬), іші ∨, арасы ∧. (Бастапқы docx файлындағы қате түзетілді; math log.docx №3-те де дәл осы (¬x ∨ ¬y) жауабы тұр!)", "visual": {"type": "tt2", "bits": "1110", "mode": "PCNF"}}, {"id": 59, "tag": "PCNF-15", "topic": "normal", "q": "Find PCNF of this formula: x ↔ y", "opts": ["(¬x ∧ ¬y) ∨ (x ∧ y)", "(x ∨ ¬y) ∧ (¬x ∨ y)", "(x ∨ y) ∧ (¬x ∨ ¬y)", "(x ∨ ¬y) ∨ (¬x ∨ y)"], "ans": 1, "exp": "x ↔ y кестесі: 1001 (0-дер 01 және 10 жолдарында) → (x ∨ ¬y) ∧ (¬x ∨ y).", "visual": {"type": "tt2", "bits": "1001", "mode": "PCNF"}}, {"id": 60, "tag": "SYS-1", "topic": "laws", "q": "Which system of Boolean formulas is completed?", "opts": ["{ ∧, ∨ }", "{ ∧, ¬ }", "{ ∨, → }", "{ ∧, → }"], "ans": 1, "exp": "Пост теоремасы бойынша {∧, ¬} функционалды толық жүйе (Де Морган арқылы ∨ алынады)."}, {"id": 61, "tag": "SYS-2", "topic": "laws", "q": "Which system of Boolean formulas is completed?", "opts": ["{ ∧, ↔ }", "{ ∨, → }", "{ ∨, ¬ }", "{ ∧, ∨ }"], "ans": 2, "exp": "{∨, ¬} функционалды толық жүйе (Де Морган арқылы ∧ алынады)."}, {"id": 62, "tag": "SYS-3", "topic": "laws", "q": "Which system of Boolean formulas is completed?", "opts": ["{ ∧, → }", "{ ∨, ↔ }", "{ →, ¬ }", "{ ∧, ∨ }"], "ans": 2, "exp": "{→, ¬} функционалды толық жүйе (A ∨ B = ¬A → B)."}, {"id": 63, "tag": "SYS-4", "topic": "laws", "q": "Which system of Boolean formulas is NOT completed?", "opts": ["{ ∨, ¬ }", "{ →, ¬ }", "{ ∧, ¬ }", "{ ∧, → }"], "ans": 3, "exp": "{∧, →} жүйесі T1 класында жатыр (1-ді сақтайды, 0-ді ала алмайды) → толық емес!"}, {"id": 64, "tag": "SYS-5", "topic": "laws", "q": "Which system of Boolean formulas is NOT completed?", "opts": ["{ ∧, ¬ }", "{ ∨, ¬ }", "{ | }", "{ ∨, → }"], "ans": 3, "exp": "{∨, →} жүйесі де T1 класында жатыр (1-ді сақтайды) → толық емес!"}, {"id": 65, "tag": "SIM-1", "topic": "laws", "q": "Simplify this formula: ¬(¬P ∨ Q) → ((P ∨ Q) → P)", "opts": ["P ∨ Q", "1", "P ∧ ¬Q", "0"], "ans": 1, "exp": "¬(¬P ∨ Q) = P ∧ ¬Q. Егер P=1, Q=0 болса (P ∨ Q) → P = 1 → 1 = 1. Импликация әрқашан 1."}, {"id": 66, "tag": "SIM-2", "topic": "laws", "q": "Simplify this formula: (P → Q) ∧ (Q → P) ∧ (P ∨ Q)", "opts": ["P ∨ Q", "1", "P ∧ Q", "¬P ∧ ¬Q"], "ans": 2, "exp": "(P → Q) ∧ (Q → P) = (P ↔ Q). P және Q бірдей әрі кемінде біреуі 1 болса → екеуі де 1 (P ∧ Q)."}, {"id": 67, "tag": "SIM-3", "topic": "laws", "q": "Simplify this formula: (P → Q) ∧ (Q → ¬P) ∧ (R → P)", "opts": ["¬P ∧ ¬R", "¬Q ∧ R", "P ∧ R", "¬P ∨ ¬R"], "ans": 0, "exp": "(P → Q) ∧ (Q → ¬P) ⇒ P → ¬P ⇒ ¬P. Ал R → P және ¬P болса ⇒ ¬R. Жауабы: ¬P ∧ ¬R."}, {"id": 68, "tag": "SIM-4", "topic": "laws", "q": "Simplify this formula: (P ∧ R) ∨ (P ∧ ¬R) ∨ (Q ∧ R) ∨ (¬P ∧ Q ∧ R)", "opts": ["¬P ∨ Q", "P ∨ (R ∨ Q)", "P ∧ R", "P ∧ (R ∧ Q)"], "ans": 1, "exp": "Platonus тест базасындағы <variant> кілті: P ∨ (R ∨ Q). (Математикалық дәл түрі: P ∨ (Q ∧ R), бірақ тестте осы нұсқа дұрыс ретінде белгіленген!)"}, {"id": 69, "tag": "LAW-1", "topic": "laws", "q": "Choose the equivalent Boolean identity:\nP ∨ ¬P ≡", "opts": ["1", "0", "¬P", "P"], "ans": 0, "exp": "Үшіншісін болдырмау заңы (Law of Excluded Middle)."}, {"id": 70, "tag": "LAW-2", "topic": "laws", "q": "Choose the equivalent Boolean identity:\nP ∧ ¬P ≡", "opts": ["P", "0", "¬P", "1"], "ans": 1, "exp": "Қайшылық заңы (Contradiction Law)."}, {"id": 71, "tag": "LAW-3", "topic": "laws", "q": "Choose the equivalent Boolean identity:\nP ∨ 0 ≡", "opts": ["¬P", "P", "0", "1"], "ans": 1, "exp": "Нөлмен дизъюнкция (Identity Law): P ∨ 0 ≡ P."}, {"id": 72, "tag": "LAW-4", "topic": "laws", "q": "Choose the equivalent Boolean identity:\nP ∧ 0 ≡", "opts": ["0", "¬P", "1", "P"], "ans": 0, "exp": "Нөлмен конъюнкция (Domination Law): P ∧ 0 ≡ 0."}, {"id": 73, "tag": "LAW-5", "topic": "laws", "q": "Choose the equivalent Boolean identity:\nP ∧ 1 ≡", "opts": ["P", "0", "¬P", "1"], "ans": 0, "exp": "Бірлікпен конъюнкция (Identity Law): P ∧ 1 ≡ P."}, {"id": 74, "tag": "LAW-6", "topic": "laws", "q": "Choose the equivalent Boolean identity:\nP ∧ Q ≡", "opts": ["¬P ∧ ¬Q", "Q ∨ P", "P → Q", "Q ∧ P"], "ans": 3, "exp": "Конъюнкцияның ауыстырымдылық (Commutative) заңы."}, {"id": 75, "tag": "LAW-7", "topic": "laws", "q": "Choose the equivalent Boolean identity:\nP ∨ Q ≡", "opts": ["Q ∧ P", "Q ∨ P", "¬P ∨ ¬Q", "P ↔ Q"], "ans": 1, "exp": "Дизъюнкцияның ауыстырымдылық (Commutative) заңы."}, {"id": 76, "tag": "LAW-8", "topic": "laws", "q": "Choose the equivalent Boolean identity:\n(P ∧ Q) ∧ R ≡", "opts": ["P ∧ (Q ∧ R)", "P ∧ (Q ∨ R)", "P ∨ (Q ∧ R)", "(P ∧ Q) ∨ (P ∧ R)"], "ans": 0, "exp": "Конъюнкцияның терімділік (Associative) заңы."}, {"id": 77, "tag": "LAW-9", "topic": "laws", "q": "Choose the equivalent Boolean identity:\n(P ∨ Q) ∨ R ≡", "opts": ["(P ∨ Q) ∧ (P ∨ R)", "P ∧ (Q ∨ R)", "P ∨ (Q ∧ R)", "P ∨ (Q ∨ R)"], "ans": 3, "exp": "Дизъюнкцияның терімділік (Associative) заңы."}, {"id": 78, "tag": "LAW-10", "topic": "laws", "q": "Choose the equivalent Boolean identity:\nP ∧ (Q ∨ R) ≡", "opts": ["(P ∨ Q) ∧ (P ∨ R)", "(P ∧ Q) ∨ (P ∧ R)", "P ∨ (Q ∧ R)", "(P ∧ Q) ∧ R"], "ans": 1, "exp": "Конъюнкцияның дизъюнкцияға қатысты үлестірімділік заңы."}, {"id": 79, "tag": "LAW-11", "topic": "laws", "q": "Choose the equivalent Boolean identity:\nP ∨ (Q ∧ R) ≡", "opts": ["(P ∧ Q) ∨ (P ∧ R)", "(P ∨ Q) ∧ (P ∨ R)", "P ∧ (Q ∨ R)", "(P ∨ Q) ∨ R"], "ans": 1, "exp": "Дизъюнкцияның конъюнкцияға қатысты үлестірімділік заңы."}, {"id": 80, "tag": "LAW-12", "topic": "laws", "q": "Choose the equivalent Boolean identity:\nP ∧ P ≡", "opts": ["1", "¬P", "P", "0"], "ans": 2, "exp": "Идемпотенттілік заңы (Idempotent Law): P ∧ P ≡ P."}, {"id": 81, "tag": "LAW-13", "topic": "laws", "q": "Choose the equivalent Boolean identity:\nP ∨ P ≡", "opts": ["1", "0", "P", "¬P"], "ans": 2, "exp": "Идемпотенттілік заңы (Idempotent Law): P ∨ P ≡ P."}, {"id": 82, "tag": "LAW-14", "topic": "laws", "q": "Choose the equivalent Boolean identity:\nP ∧ (Q ∨ P) ≡", "opts": ["P", "Q", "P ∧ Q", "P ∨ Q"], "ans": 0, "exp": "Жұтылу заңы (Absorption Law): P ∧ (Q ∨ P) ≡ P."}, {"id": 83, "tag": "LAW-15", "topic": "laws", "q": "Choose the equivalent Boolean identity:\nP ∨ (Q ∧ P) ≡", "opts": ["Q", "P ∧ Q", "P", "P ∨ Q"], "ans": 2, "exp": "Жұтылу заңы (Absorption Law): P ∨ (Q ∧ P) ≡ P."}, {"id": 84, "tag": "LAW-16", "topic": "laws", "q": "Choose the equivalent Boolean identity:\nP → Q ≡", "opts": ["¬P ∧ Q", "¬P ∨ Q", "P ∧ ¬Q", "P ∨ ¬Q"], "ans": 1, "exp": "Импликацияны дизъюнкция арқылы өрнектеу: P → Q ≡ ¬P ∨ Q."}, {"id": 85, "tag": "LAW-17", "topic": "laws", "q": "Choose the equivalent Boolean identity:\nP ↔ Q ≡", "opts": ["(P → Q) ∨ (Q → P)", "(P ∧ Q) ∨ ¬P", "(P → Q) ∧ (Q → P)", "¬P ∨ Q"], "ans": 2, "exp": "Эквиваленттілік анықтамасы: P ↔ Q ≡ (P → Q) ∧ (Q → P)."}, {"id": 86, "tag": "LAW-18", "topic": "laws", "q": "Choose the equivalent Boolean identity:\n¬(P ∧ Q) ≡", "opts": ["¬P ∨ ¬Q", "¬P ∧ ¬Q", "¬P → ¬Q", "P ∨ Q"], "ans": 0, "exp": "Де Морган заңы (1-заң): ¬(P ∧ Q) ≡ ¬P ∨ ¬Q."}, {"id": 87, "tag": "LAW-19", "topic": "laws", "q": "Choose the equivalent Boolean identity:\n¬(P ∨ Q) ≡", "opts": ["P ∧ Q", "¬P ∧ ¬Q", "¬P ↔ ¬Q", "¬P ∨ ¬Q"], "ans": 1, "exp": "Де Морган заңы (2-заң): ¬(P ∨ Q) ≡ ¬P ∧ ¬Q."}, {"id": 88, "tag": "ST-1", "topic": "statements", "q": "Write this statement in form of conjunction or disjunction: a · b ≠ 0", "opts": ["(a ≠ 0) ∨ (b ≠ 0)", "(a ≠ 0) ∧ (b ≠ 0)", "(a = 0) ∧ (b = 0)", "(a = 0) ∨ (b = 0)"], "ans": 1, "exp": "Көбейтінді нөлге тең болмауы үшін ЕКІ көбейткіш те 0-ге тең болмауы тиіс (∧)."}, {"id": 89, "tag": "ST-2", "topic": "statements", "q": "Write this statement in form of conjunction or disjunction: a · b = 0", "opts": ["(a = 0) ∧ (b = 0)", "(a = 0) ∨ (b = 0)", "(a ≠ 0) ∧ (b ≠ 0)", "(a ≠ 0) ∨ (b ≠ 0)"], "ans": 1, "exp": "Көбейтінді 0 болуы үшін көбейткіштердің кемінде біреуі 0 болуы жеткілікті (∨)."}, {"id": 90, "tag": "ST-3", "topic": "statements", "q": "Write this statement in form of conjunction or disjunction: a² + b² = 0", "opts": ["(a ≠ 0) ∧ (b ≠ 0)", "(a ≠ 0) ∨ (b ≠ 0)", "(a = 0) ∨ (b = 0)", "(a = 0) ∧ (b = 0)"], "ans": 3, "exp": "Нақты сандар квадраттарының қосындысы 0 болуы үшін ЕКЕУІ де 0 болуы шарт (∧)."}, {"id": 91, "tag": "ST-4", "topic": "statements", "q": "Write this statement in form of conjunction or disjunction: a / b ≠ 0", "opts": ["(a ≠ 0) ∨ (b ≠ 0)", "(a = 0) ∧ (b ≠ 0)", "(a ≠ 0) ∧ (b ≠ 0)", "(a = 0) ∨ (b = 0)"], "ans": 2, "exp": "Бөлшек 0-ге тең болмауы әрі анықталуы үшін алымы да (a ≠ 0), бөлімі де (b ≠ 0) нөл болмауы тиіс."}, {"id": 92, "tag": "ST-5", "topic": "statements", "q": "Given statement A = «a can be divided by 3» and statement B = «a can be divided by 4». Write this statement as formula «a can be divided by 3 and can not be divided by 4»:", "opts": ["¬(A ∧ B)", "A ∨ ¬B", "A ∧ ¬B", "¬A ∧ B"], "ans": 2, "exp": "«3-ке бөлінеді» (A) ЖӘНЕ (∧) «4-ке бөлінбейді» (¬B) → A ∧ ¬B."}, {"id": 93, "tag": "ST-6", "topic": "statements", "q": "Given statement A = «a can be divided by 3» and statement B = «a can be divided by 4». Write this statement as formula «statement that a can not be divided by 3 and 4 is false»:", "opts": ["¬(¬A ∧ ¬B)", "¬A ∨ ¬B", "¬A ∧ ¬B", "¬(A ∧ B)"], "ans": 0, "exp": "«3-ке және 4-ке бөлінбейді» = (¬A ∧ ¬B), ал бұл пікір жалған = ¬(¬A ∧ ¬B)."}, {"id": 94, "tag": "ST-7", "topic": "statements", "q": "Given statement A = «a can be divided by 3» and statement B = «a can be divided by 4». Write this statement as formula «a can be divided by 3 and by 4»:", "opts": ["¬A ∨ ¬B", "A ∨ B", "A → B", "¬A ∧ ¬B"], "ans": 1, "exp": "Platonus базасындағы <variant> кілтінде A ∨ B деп көрсетілген (математикада «and» үшін A ∧ B, бірақ тест кілтін есте сақтаңыз!)."}, {"id": 95, "tag": "NF-1", "topic": "normal", "q": "DNF of this formula X ∧ (X → Y) → Y is:", "opts": ["¬X ∨ (X ∧ ¬Y) ∨ Y", "(¬X ∨ X ∨ Y) ∧ (¬X ∨ ¬Y ∨ Y)", "X ∧ ¬Y ∧ Y", "(¬X ∧ Y) ∨ (X ∧ Y)"], "ans": 0, "exp": "¬(X ∧ (¬X ∨ Y)) ∨ Y = ¬X ∨ ¬(¬X ∨ Y) ∨ Y = ¬X ∨ (X ∧ ¬Y) ∨ Y."}, {"id": 96, "tag": "NF-2", "topic": "normal", "q": "CNF of this formula (X → Y) ∧ ¬(X ∨ Y) is:", "opts": ["(¬X ∧ Y) ∨ (¬X ∧ ¬Y)", "(¬X ∨ Y) ∧ (¬X ∨ ¬Y) ∧ (X ∨ ¬Y)", "¬X ∨ Y ∨ ¬Y", "(X ∨ Y) ∧ (¬X ∨ Y)"], "ans": 1, "exp": "Platonus <variant> кілті: (¬X ∨ Y) ∧ (¬X ∨ ¬Y) ∧ (X ∨ ¬Y)."}, {"id": 97, "tag": "NF-3", "topic": "normal", "q": "DNF of this formula X → Y is:", "opts": ["(¬X ∧ Y) ∨ (¬X ∧ ¬Y) ∨ (X ∧ Y)", "(X ∧ ¬Y)", "(¬X ∨ Y) ∧ (X ∨ ¬Y)", "(X ∧ Y) ∨ (X ∧ ¬Y)"], "ans": 0, "exp": "X → Y кестесі 1101 (00, 01, 11 жолдарында 1) → (¬X ∧ ¬Y) ∨ (¬X ∧ Y) ∨ (X ∧ Y)."}, {"id": 98, "tag": "NF-4", "topic": "normal", "q": "CNF of this formula X ∧ (X → Y) → Y is:", "opts": ["(X ∨ Y) ∧ (¬X ∨ ¬Y)", "¬X ∨ (X ∧ ¬Y) ∨ Y", "(¬X ∨ X ∨ Y) ∧ (¬X ∨ ¬Y ∨ Y)", "(¬X ∧ X) ∨ Y"], "ans": 2, "exp": "¬X ∨ (X ∧ ¬Y) ∨ Y формуласына дистрибутивтік заң қолдансақ: (¬X ∨ X ∨ Y) ∧ (¬X ∨ ¬Y ∨ Y)."}, {"id": 99, "tag": "COMB-1", "topic": "comb", "q": "How many words with 4 different letters can we construct from word “Оқушы”?", "opts": ["C₅⁴", "5⁴", "A₅⁴", "P₅"], "ans": 2, "exp": "«Оқушы» сөзінде 5 әртүрлі әріп бар, орын тәртібі маңызды → орналастыру A₅⁴ = 5! / 1! = 120."}, {"id": 100, "tag": "COMB-2", "topic": "comb", "q": "Four students passed the exam. If it is obvious that all of them get good marks (4 or 5), in how many ways teacher can give them marks?", "opts": ["A₄²", "3⁴", "4³", "C₄²"], "ans": 1, "exp": "Platonus базасындағы <variant> кілті: 3⁴ (егер 3, 4, 5 бағалары болса 3⁴ = 81; тест кілтінде 3⁴ деп тұр!)."}, {"id": 101, "tag": "COMB-3", "topic": "comb", "q": "There are 9 people in a group. We need to choose one principal and one vice-principal among them. In how many ways we can choose them?", "opts": ["C₉²", "9²", "P₉", "A₉²"], "ans": 3, "exp": "Лауазымдар әртүрлі (тәртіп маңызды) → қайталанбайтын орналастыру A₉² = 9 × 8 = 72."}, {"id": 102, "tag": "COMB-4", "topic": "comb", "q": "There are 6 types of flower selling in the flower shop. Each bouquet must have 10 flowers. How many different bouquets we can make from them?", "opts": ["C̄₆¹⁰", "6¹⁰", "C₁₀⁶", "A₁₀⁶"], "ans": 0, "exp": "Тәртіп маңызды емес және гүл түрлері қайталанады → қайталанатын теру C̄₆¹⁰ = C(6+10-1, 10)."}, {"id": 103, "tag": "COMB-5", "topic": "comb", "q": "In how many ways we can put 10 different balls into 3 different boxes?", "opts": ["P₁₀", "A₁₀³", "C̄₃¹⁰", "C₁₀³"], "ans": 2, "exp": "Platonus <variant> кілті: C̄₃¹⁰ (3 жәшікке 10 шарды қайталанатын теру ретінде берілген)."}, {"id": 104, "tag": "COMB-6", "topic": "comb", "q": "In how many ways we can choose 4 movies among 10 movies?", "opts": ["C₁₀⁴", "A₁₀⁴", "10⁴", "C̄₁₀⁴"], "ans": 0, "exp": "4 фильмді таңдауда рет маңызды емес → теру C₁₀⁴ = 210."}, {"id": 105, "tag": "COMB-7", "topic": "comb", "q": "Chinese restaurant offers to choose 3 dishes among 7 dishes. In how many ways we can choose them?", "opts": ["7³", "P₇", "A₇³", "C̄₇³"], "ans": 2, "exp": "Platonus <variant> кілті: A₇³ (тағамдарды ретімен таңдау ретінде орналастыру A₇³ берілген)."}, {"id": 106, "tag": "COMB-8", "topic": "comb", "q": "There are 4 types of rose selling in the flower shop. How many bouquets we can make from 100 roses?", "opts": ["C₁₀₀⁴", "4¹⁰⁰", "A₁₀₀⁴", "C̄₄¹⁰⁰"], "ans": 3, "exp": "4 түрлі раушаннан 100 гүлдік букет (қайталанатын теру) → C̄₄¹⁰⁰."}, {"id": 107, "tag": "COMB-9", "topic": "comb", "q": "In how many ways we can choose 2 fruits among 7 fruits?", "opts": ["7²", "A₇²", "C̄₇²", "C₇²"], "ans": 3, "exp": "2 жемісті таңдау (рет маңызды емес) → теру C₇² = 21."}, {"id": 108, "tag": "COMB-10", "topic": "comb", "q": "There are 10 books on a bookshelf. In how many ways we can choose 3 of them?", "opts": ["C̄₁₀³", "C₁₀³", "A₁₀³", "10³"], "ans": 1, "exp": "10 кітаптан 3 кітапты таңдау (рет маңызды емес) → теру C₁₀³ = 120."}, {"id": 109, "tag": "COMB-11", "topic": "comb", "q": "In how many ways we can share 12 books to 4 students?", "opts": ["P₁₂", "C̄₁₂⁴", "A₁₂⁴", "C₁₂⁴"], "ans": 1, "exp": "Platonus <variant> кілті: C̄₁₂⁴ (қайталанатын теру ретінде белгіленген)."}];
+
+const TOPIC_INFO = {
+  theorems:   { icon: "📐", name: "Теоремалар (Converse/Inverse/Contrapositive)", desc: "Кері, қарама-қарсы және керісіне қарама-қарсы теоремалар." },
+  graphs:     { icon: "🕸️", name: "Графтар теориясы (SVG сызбалар)", desc: "Жол, цикл, Эйлер, Гамильтон, ағаш, жазық және байланысқан графтар." },
+  classes:    { icon: "🎯", name: "Формула түрлері (Tautology/Satisfiable)", desc: "Тавтология, орындалатын, теріске шығарылатын және қайшылық формулалар." },
+  normal:     { icon: "🧩", name: "PDNF, PCNF, DNF & CNF", desc: "Екі айнымалылы барлық 14 функцияның PDNF/PCNF және x→y, x↔y." },
+  laws:       { icon: "⚖️", name: "Буль алгебрасы заңдары & Толық жүйелер", desc: "19 негізгі теңдік, Де Морган, жұтылу заңы, ықшамдау және Пост жүйелері." },
+  statements: { icon: "✍️", name: "Пікірлерді логикалық формулаға жазу", desc: "a·b=0, a²+b²=0, a/b≠0 және бөлінгіштік шарттарын өрнектеу." },
+  comb:       { icon: "🎲", name: "Комбинаторика (A, C, C̄)", desc: "Орналастыру, теру және қайталанатын теру бойынша емтихан есептері." }
+};
+
+// ============================================================================
+// CUSTOM SVG GRAPH & TRUTH TABLE RENDERERS
+// ============================================================================
+function renderGraphSVG(key) {
+  const baseStart = `<svg viewBox="0 0 320 130" width="310" xmlns="http://www.w3.org/2000/svg">`;
+  const node = (x, y, lbl, fill='#1e293b', stroke='#38bdf8') =>
+    `<circle cx="${x}" cy="${y}" r="13" fill="${fill}" stroke="${stroke}" stroke-width="2.2"/><text x="${x}" y="${y+4}" text-anchor="middle" font-size="11" font-weight="bold" fill="#f8fafc">${lbl}</text>`;
+  const edge = (x1, y1, x2, y2, col='#64748b', w=2.2, dash='') =>
+    `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="${w}" ${dash ? `stroke-dasharray="${dash}"` : ''}/>`;
+
+  if (key === 'path') {
+    return baseStart +
+      edge(40,65,115,35,'#38bdf8',3) + edge(115,35,205,95,'#38bdf8',3) + edge(205,95,280,55,'#38bdf8',3) +
+      node(40,65,'v₁','#0369a1','#38bdf8') + node(115,35,'v₂') + node(205,95,'v₃') + node(280,55,'v₄','#065f46','#10b981') +
+      `<text x="160" y="122" text-anchor="middle" font-size="11" fill="#94a3b8">v₁ → v₂ → v₃ → v₄ (қайталанусыз)</text></svg>`;
+  }
+  if (key === 'cyclic' || key === 'simple_cycle') {
+    return baseStart +
+      edge(85,30,235,30,'#a855f7',3) + edge(235,30,265,95,'#a855f7',3) + edge(265,95,55,95,'#a855f7',3) + edge(55,95,85,30,'#a855f7',3) +
+      node(85,30,'v₁','#581c87','#a855f7') + node(235,30,'v₂') + node(265,95,'v₃') + node(55,95,'v₄') +
+      `<text x="160" y="122" text-anchor="middle" font-size="11" fill="#94a3b8">v₁ → v₂ → v₃ → v₄ → v₁ (тұйықталған)</text></svg>`;
+  }
+  if (key === 'euler') {
+    // Bowtie / double triangle: every vertex has even degree (2 or 4)
+    return baseStart +
+      edge(50,30,160,65,'#10b981',2.6) + edge(50,100,160,65,'#10b981',2.6) + edge(50,30,50,100,'#10b981',2.6) +
+      edge(270,30,160,65,'#f59e0b',2.6) + edge(270,100,160,65,'#f59e0b',2.6) + edge(270,30,270,100,'#f59e0b',2.6) +
+      node(50,30,'A') + node(50,100,'B') + node(160,65,'C','#78350f','#f59e0b') + node(270,30,'D') + node(270,100,'E') +
+      `<text x="160" y="123" text-anchor="middle" font-size="11" fill="#94a3b8">deg = 2, 2, 4, 2, 2 (барлық қабырға дәл 1 рет)</text></svg>`;
+  }
+  if (key === 'hamilton') {
+    // Pentagon + inner chords, outer ring highlighted
+    const pts = [[160,18],[245,50],[215,104],[105,104],[75,50]];
+    let s = baseStart;
+    s += edge(pts[0][0],pts[0][1],pts[2][0],pts[2][1],'#334155',1.6,'4,3');
+    s += edge(pts[1][0],pts[1][1],pts[4][0],pts[4][1],'#334155',1.6,'4,3');
+    for (let i = 0; i < 5; i++) {
+      const a = pts[i], b = pts[(i+1)%5];
+      s += edge(a[0],a[1],b[0],b[1],'#38bdf8',3);
+    }
+    pts.forEach((p, i) => { s += node(p[0], p[1], 'v'+(i+1)); });
+    return s + `<text x="160" y="125" text-anchor="middle" font-size="11" fill="#94a3b8">Барлық төбені дәл 1 рет өту</text></svg>`;
+  }
+  if (key === 'tree') {
+    return baseStart +
+      edge(160,24,95,62,'#10b981',2.6) + edge(160,24,225,62,'#10b981',2.6) +
+      edge(95,62,55,102,'#10b981',2.6) + edge(95,62,135,102,'#10b981',2.6) + edge(225,62,255,102,'#10b981',2.6) +
+      node(160,24,'r','#065f46','#10b981') + node(95,62,'a') + node(225,62,'b') + node(55,102,'c') + node(135,102,'d') + node(255,102,'e') +
+      `<text x="160" y="125" text-anchor="middle" font-size="11" fill="#94a3b8">Байланысқан, цикл жоқ (E = V - 1)</text></svg>`;
+  }
+  if (key === 'planar') {
+    // K4 embedded in plane (outer triangle + center vertex)
+    return baseStart +
+      edge(160,18,65,104,'#38bdf8',2.4) + edge(160,18,255,104,'#38bdf8',2.4) + edge(65,104,255,104,'#38bdf8',2.4) +
+      edge(160,72,160,18,'#a855f7',2.4) + edge(160,72,65,104,'#a855f7',2.4) + edge(160,72,255,104,'#a855f7',2.4) +
+      node(160,18,'1') + node(65,104,'2') + node(255,104,'3') + node(160,72,'4','#581c87','#a855f7') +
+      `<text x="160" y="125" text-anchor="middle" font-size="11" fill="#94a3b8">Қабырғалары қиылыспай жазықтыққа салынған (K₄)</text></svg>`;
+  }
+  if (key === 'connected') {
+    return baseStart +
+      edge(50,40,130,30,'#38bdf8',2.4) + edge(50,40,95,95,'#38bdf8',2.4) + edge(130,30,95,95,'#38bdf8',2.4) +
+      edge(130,30,210,65,'#10b981',3) + edge(210,65,275,35,'#38bdf8',2.4) + edge(210,65,270,98,'#38bdf8',2.4) +
+      node(50,40,'1') + node(130,30,'2') + node(95,95,'3') + node(210,65,'4') + node(275,35,'5') + node(270,98,'6') +
+      `<text x="160" y="124" text-anchor="middle" font-size="11" fill="#94a3b8">Кез келген екі төбе арасында жол бар</text></svg>`;
+  }
+  return '';
+}
+
+function renderTruthTableMini(bits, mode) {
+  const rows = [['0','0'],['0','1'],['1','0'],['1','1']];
+  let html = `<table class="tt-mini"><thead><tr><th>x</th><th>y</th><th>f(x, y)</th></tr></thead><tbody>`;
+  for (let i = 0; i < 4; i++) {
+    const b = bits[i];
+    const hl = (mode === 'PDNF' && b === '1') ? 'hl-pdnf' : ((mode === 'PCNF' && b === '0') ? 'hl-pcnf' : '');
+    html += `<tr class="${hl}"><td>${rows[i][0]}</td><td>${rows[i][1]}</td><td><b>${b}</b></td></tr>`;
+  }
+  html += `</tbody></table>`;
+  return html;
+}
+
+function renderVisual(v) {
+  if (!v) return '';
+  if (v.type === 'graph') return `<div class="visual-box">${renderGraphSVG(v.key)}</div>`;
+  if (v.type === 'tt2') return `<div class="visual-box">${renderTruthTableMini(v.bits, v.mode)}</div>`;
+  return '';
+}
+
+// ============================================================================
+// APP STATE & STORAGE
+// ============================================================================
+const LS_PREFIX = 'dmlogic_final_';
+let mode = 'game';
+let soundOn = true;
+let sessionList = [];
+let sessionTitle = '';
+let sessionIsExam = false;
+let curIdx = 0;
+let answers = {};
+let flags = {};
+let score = 0;
+let streak = 0;
+let timerInt = null;
+let timeLeft = 45;
+let lastStartFn = null;
+
+function lsGet(k, def) {
+  try { const v = localStorage.getItem(LS_PREFIX + k); return v ? JSON.parse(v) : def; } catch { return def; }
+}
+function lsSet(k, v) {
+  try { localStorage.setItem(LS_PREFIX + k, JSON.stringify(v)); } catch {}
+}
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function playTone(ok) {
+  if (!soundOn) return;
+  try {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new Ctx();
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    osc.connect(g); g.connect(ctx.destination);
+    if (ok) {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+      osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.08);
+      g.gain.setValueAtTime(0.18, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.008, ctx.currentTime + 0.28);
+      osc.start(); osc.stop(ctx.currentTime + 0.28);
+    } else {
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(210, ctx.currentTime);
+      osc.frequency.setValueAtTime(140, ctx.currentTime + 0.1);
+      g.gain.setValueAtTime(0.15, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.008, ctx.currentTime + 0.3);
+      osc.start(); osc.stop(ctx.currentTime + 0.3);
+    }
+  } catch {}
+}
+
+function toggleSound() {
+  soundOn = !soundOn;
+  document.getElementById('soundBtn').textContent = soundOn ? '🔊 Дыбыс: Қосулы' : '🔇 Дыбыс: Өшірулі';
+}
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('modeGameBtn').classList.toggle('active', m === 'game');
+  document.getElementById('modeStudyBtn').classList.toggle('active', m === 'study');
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  ['blocks', 'topics', 'exam', 'bank'].forEach(t => {
+    document.getElementById('tab-' + t).style.display = (t === id) ? 'block' : 'none';
+  });
+  if (id === 'bank') renderBank();
+}
+
+function renderDashboard() {
+  const mastered = lsGet('mastered', []);
+  const errors = lsGet('errors', []);
+  const bestExam = lsGet('bestExam', 0);
+  document.getElementById('masteredStat').textContent = mastered.length;
+  document.getElementById('errorStat').textContent = errors.length;
+  document.getElementById('bestExamStat').textContent = bestExam + '/30';
+  document.getElementById('errQuickNum').textContent = errors.length;
+  document.getElementById('errQuickBtn').style.display = errors.length > 0 ? 'inline-flex' : 'none';
+
+  document.getElementById('blocksGrid').innerHTML = BLOCKS.map(b => {
+    const cnt = b.end - b.start;
+    return `<div class="block-card">
+      <div class="b-top"><span class="b-badge">${b.badge}</span><span class="b-count">${cnt} сұрақ</span></div>
+      <div class="b-title">${esc(b.title)}</div>
+      <div class="b-desc">${esc(b.desc)}</div>
+      <div class="b-actions">
+        <button class="btn btn-primary" onclick="startBlock(${b.id}, false)">▶ Бастау</button>
+        <button class="btn btn-outline" onclick="startBlock(${b.id}, true)">🔀 Аралас</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('topicsGrid').innerHTML = Object.entries(TOPIC_INFO).map(([k, info]) => {
+    const cnt = DB.filter(q => q.topic === k).length;
+    return `<div class="block-card">
+      <div class="b-top"><span class="b-badge">${info.icon} ${cnt} сұрақ</span></div>
+      <div class="b-title">${esc(info.name)}</div>
+      <div class="b-desc">${esc(info.desc)}</div>
+      <div class="b-actions">
+        <button class="btn btn-primary" onclick="startTopic('${k}', false)">▶ Бастау</button>
+        <button class="btn btn-outline" onclick="startTopic('${k}', true)">🔀 Аралас</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function shuffleArr(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startBlock(blockId, shuffled) {
+  const b = BLOCKS.find(x => x.id === blockId);
+  if (!b) return;
+  lastStartFn = () => startBlock(blockId, shuffled);
+  let list = DB.slice(b.start, b.end);
+  if (shuffled) list = shuffleArr(list);
+  beginSession(list, b.title, false);
+}
+
+function startTopic(t, shuffled) {
+  lastStartFn = () => startTopic(t, shuffled);
+  let list = DB.filter(q => q.topic === t);
+  if (shuffled) list = shuffleArr(list);
+  beginSession(list, TOPIC_INFO[t].name, false);
+}
+
+function startGraphComb(shuffled) {
+  lastStartFn = () => startGraphComb(shuffled);
+  let list = DB.filter(q => q.topic === 'graphs' || q.topic === 'comb');
+  if (shuffled) list = shuffleArr(list);
+  beginSession(list, '🕸️ Графтар & Комбинаторика (21 сұрақ)', false);
+}
+
+function startMarathon(shuffled) {
+  lastStartFn = () => startMarathon(shuffled);
+  let list = shuffled ? shuffleArr(DB) : [...DB];
+  beginSession(list, '⚡ Барлық 109 сұрақ Марафон', false);
+}
+
+function startExam() {
+  lastStartFn = () => startExam();
+  beginSession(shuffleArr(DB).slice(0, 30), '🎓 Финал Емтихан (30 сұрақ)', true);
+}
+
+function startErrors() {
+  const errs = lsGet('errors', []);
+  if (!errs.length) return;
+  lastStartFn = () => startErrors();
+  beginSession(DB.filter(q => errs.includes(q.id)), '🔄 Қателермен жұмыс', false);
+}
+
+function retrySessionWrong() {
+  const wrongQs = sessionList.filter(q => answers[q.id] !== q.ans);
+  if (!wrongQs.length) return;
+  lastStartFn = () => retrySessionWrong();
+  beginSession(wrongQs, '🔄 Қате кеткен сұрақтар', false);
+}
+
+function restartCurrent() { if (lastStartFn) lastStartFn(); }
+
+function beginSession(list, title, isExam) {
+  sessionList = list;
+  sessionTitle = title;
+  sessionIsExam = isExam;
+  curIdx = 0;
+  answers = {};
+  flags = {};
+  score = 0;
+  streak = 0;
+
+  document.getElementById('dashboardView').style.display = 'none';
+  document.getElementById('resultView').style.display = 'none';
+  document.getElementById('quizView').style.display = 'block';
+  document.getElementById('navPanel').style.display = (mode === 'study' || isExam) ? 'block' : 'none';
+  document.getElementById('streakPill').style.display = (mode === 'game' && !isExam) ? 'inline-block' : 'none';
+
+  clearInterval(timerInt);
+  if (isExam) {
+    timeLeft = 45 * 60;
+    updateExamTimer();
+    timerInt = setInterval(() => {
+      timeLeft--;
+      updateExamTimer();
+      if (timeLeft <= 0) { clearInterval(timerInt); showResults(); }
+    }, 1000);
+  }
+  renderQ();
+}
+
+function updateExamTimer() {
+  const m = Math.floor(timeLeft / 60), s = timeLeft % 60;
+  const el = document.getElementById('timerPill');
+  el.textContent = `⏱ ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.classList.toggle('danger', timeLeft <= 120);
+}
+
+function updateGameTimer() {
+  const el = document.getElementById('timerPill');
+  el.textContent = `⏱ ${timeLeft}с`;
+  el.classList.toggle('danger', timeLeft <= 10);
+}
+
+function renderQ() {
+  if (!sessionIsExam) clearInterval(timerInt);
+  const q = sessionList[curIdx];
+  if (!q) return showResults();
+
+  document.getElementById('quizHeaderTitle').textContent = `${sessionTitle} · ${curIdx + 1} / ${sessionList.length}`;
+  document.getElementById('progressFill').style.width = `${((curIdx + 1) / sessionList.length) * 100}%`;
+  document.getElementById('streakPill').textContent = `🔥 ${streak}`;
+  document.getElementById('qTag').textContent = `${q.tag} · ${TOPIC_INFO[q.topic]?.name || q.topic}`;
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('qVisualSlot').innerHTML = renderVisual(q.visual);
+
+  const fBtn = document.getElementById('flagBtn');
+  fBtn.style.borderColor = flags[q.id] ? 'var(--warning)' : 'var(--border)';
+  fBtn.style.color = flags[q.id] ? 'var(--warning)' : 'var(--text)';
+
+  const grid = document.getElementById('optsGrid');
+  grid.innerHTML = '';
+  const answered = answers[q.id] !== undefined;
+  const letters = ['A', 'B', 'C', 'D'];
+
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.innerHTML = `<span class="opt-letter">${letters[i]}</span><span>${esc(opt)}</span>`;
+    if (answered) {
+      btn.disabled = true;
+      if (i === q.ans) btn.classList.add('correct');
+      if (answers[q.id] === i && i !== q.ans) btn.classList.add('wrong');
+    } else {
+      btn.onclick = () => chooseOpt(i);
+    }
+    grid.appendChild(btn);
+  });
+
+  const fb = document.getElementById('feedbackBar');
+  if (answered) {
+    const ok = answers[q.id] === q.ans;
+    fb.style.display = 'block';
+    fb.className = 'feedback-bar ' + (ok ? 'ok' : 'bad');
+    const head = ok
+      ? '✅ Дұрыс! Жарайсыз!'
+      : (answers[q.id] === -1 ? `⏰ Уақыт бітті! Дұрыс жауап: ${letters[q.ans]}` : `❌ Қате! Дұрыс жауап: ${letters[q.ans]}`);
+    fb.innerHTML = `<div>${head}</div>` + (q.exp ? `<div class="feedback-exp">💡 ${esc(q.exp)}</div>` : '');
+  } else {
+    fb.style.display = 'none';
+  }
+
+  document.getElementById('prevBtn').style.visibility = curIdx > 0 ? 'visible' : 'hidden';
+  document.getElementById('nextBtn').textContent = (curIdx === sessionList.length - 1) ? 'Нәтижені көру ✓' : 'Келесі →';
+  document.getElementById('liveScoreTxt').textContent = `Дұрыс: ${score} / ${Object.keys(answers).length}`;
+
+  if (document.getElementById('navPanel').style.display === 'block') renderNavDots();
+
+  if (!sessionIsExam) {
+    if (mode === 'game' && !answered) {
+      timeLeft = 45;
+      updateGameTimer();
+      timerInt = setInterval(() => {
+        timeLeft--;
+        updateGameTimer();
+        if (timeLeft <= 0) { clearInterval(timerInt); chooseOpt(-1); }
+      }, 1000);
+    } else if (mode === 'study') {
+      const el = document.getElementById('timerPill');
+      el.textContent = '📚 Жаттау';
+      el.classList.remove('danger');
+    }
+  }
+}
+
+function chooseOpt(idx) {
+  if (!sessionIsExam) clearInterval(timerInt);
+  const q = sessionList[curIdx];
+  if (answers[q.id] !== undefined) return;
+  answers[q.id] = idx;
+
+  const ok = idx === q.ans;
+  if (ok) {
+    score++;
+    streak++;
+    playTone(true);
+    const m = lsGet('mastered', []);
+    if (!m.includes(q.id)) { m.push(q.id); lsSet('mastered', m); }
+    lsSet('errors', lsGet('errors', []).filter(x => x !== q.id));
+  } else {
+    streak = 0;
+    playTone(false);
+    const e = lsGet('errors', []);
+    if (!e.includes(q.id)) { e.push(q.id); lsSet('errors', e); }
+  }
+  renderQ();
+
+  if (mode === 'game' && !sessionIsExam && ok) {
+    setTimeout(() => {
+      if (sessionList[curIdx]?.id === q.id) nextQ();
+    }, 850);
+  }
+}
+
+function nextQ() {
+  if (curIdx < sessionList.length - 1) { curIdx++; renderQ(); }
+  else showResults();
+}
+function prevQ() { if (curIdx > 0) { curIdx--; renderQ(); } }
+function jumpQ(i) { curIdx = i; renderQ(); }
+function toggleFlag() { const q = sessionList[curIdx]; flags[q.id] = !flags[q.id]; renderQ(); }
+
+function renderNavDots() {
+  document.getElementById('navDots').innerHTML = sessionList.map((q, i) => {
+    let cls = 'nav-dot';
+    if (i === curIdx) cls += ' cur';
+    if (answers[q.id] !== undefined) cls += (answers[q.id] === q.ans ? ' ok' : ' bad');
+    if (flags[q.id]) cls += ' flg';
+    return `<div class="${cls}" onclick="jumpQ(${i})">${i + 1}</div>`;
+  }).join('');
+}
+
+function finishOrQuit() {
+  const done = Object.keys(answers).length;
+  if (done > 0 && confirm(`Қазір аяқтап нәтижені көресіз бе? (${done}/${sessionList.length})`)) showResults();
+  else if (done === 0) showDashboard();
+}
+
+function showResults() {
+  clearInterval(timerInt);
+  document.getElementById('quizView').style.display = 'none';
+  document.getElementById('resultView').style.display = 'block';
+
+  const total = sessionList.length;
+  const pct = Math.round((score / total) * 100);
+  document.getElementById('resScore').textContent = `${score} / ${total} (${pct}%)`;
+
+  if (sessionIsExam) {
+    const prev = lsGet('bestExam', 0);
+    if (score > prev) lsSet('bestExam', score);
+  }
+  const wrongCount = sessionList.filter(q => answers[q.id] !== q.ans).length;
+  document.getElementById('resRetryWrong').style.display = wrongCount > 0 ? 'inline-flex' : 'none';
+
+  if (pct >= 80) {
+    document.getElementById('resEmoji').textContent = '🏆';
+    document.getElementById('resTitle').textContent = 'КЕРЕМЕТ! ФИНАЛҒА 100% ДАЙЫНСЫЗ!';
+    document.getElementById('resDesc').textContent = `${score}/${total} (${pct}%) — емтихан межесі сенімді бағындырылды!`;
+    launchConfetti();
+  } else if (pct >= 60) {
+    document.getElementById('resEmoji').textContent = '👍';
+    document.getElementById('resTitle').textContent = 'ЖАҚСЫ НӘТИЖЕ!';
+    document.getElementById('resDesc').textContent = `${score}/${total} дұрыс. Қате кеткен ${wrongCount} сұрақты қайталап шығыңыз!`;
+  } else {
+    document.getElementById('resEmoji').textContent = '📖';
+    document.getElementById('resTitle').textContent = 'ҚАЙТАЛАП ШЫҒУ КЕРЕК';
+    document.getElementById('resDesc').textContent = `Жаттау режимі мен Шпаргалкадағы формулаларды бір қарап шығыңыз.`;
+  }
+}
+
+function showDashboard() {
+  clearInterval(timerInt);
+  document.getElementById('quizView').style.display = 'none';
+  document.getElementById('resultView').style.display = 'none';
+  document.getElementById('dashboardView').style.display = 'block';
+  renderDashboard();
+}
+
+function renderBank() {
+  const query = (document.getElementById('bankSearch').value || '').trim().toLowerCase();
+  const flt = document.getElementById('bankFilter').value;
+  let list = flt === 'all' ? DB : DB.filter(q => q.topic === flt);
+  if (query) {
+    list = list.filter(q => (q.tag + ' ' + q.q + ' ' + q.opts.join(' ') + ' ' + (q.exp || '')).toLowerCase().includes(query));
+  }
+  document.getElementById('bankCountLabel').textContent = `Көрсетілгені: ${list.length} / ${DB.length} сұрақ`;
+  document.getElementById('bankList').innerHTML = list.map(q => `
+    <div class="bank-item">
+      <div style="font-size:0.74rem;color:var(--primary);font-weight:800;margin-bottom:5px">${esc(q.tag)} · ${esc(TOPIC_INFO[q.topic]?.name || q.topic)}</div>
+      <div style="font-weight:700;line-height:1.45;color:#fff;white-space:pre-line">${esc(q.q)}</div>
+      ${q.visual ? renderVisual(q.visual) : ''}
+      <div class="bank-ans">✓ ${esc(q.opts[q.ans])}</div>
+      ${q.exp ? `<div class="bank-exp">💡 ${esc(q.exp)}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function launchConfetti() {
+  const canvas = document.getElementById('confettiCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const colors = ['#10b981', '#38bdf8', '#a855f7', '#facc15', '#f43f5e'];
+  const pieces = Array.from({length: 110}, () => ({
+    x: Math.random() * canvas.width, y: -20 - Math.random() * 200,
+    w: 7 + Math.random() * 6, h: 5 + Math.random() * 6,
+    vx: (Math.random() - 0.5) * 4, vy: 3 + Math.random() * 4,
+    rot: Math.random() * Math.PI * 2, vrot: (Math.random() - 0.5) * 0.2,
+    c: colors[Math.floor(Math.random() * colors.length)]
+  }));
+  let frames = 0;
+  function step() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.rot += p.vrot;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = p.c; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    if (++frames < 150) requestAnimationFrame(step);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  requestAnimationFrame(step);
+}
+
+window.addEventListener('keydown', (e) => {
+  if (document.getElementById('quizView').style.display !== 'block') return;
+  const k = e.key.toUpperCase();
+  if (k === '1' || k === 'A') chooseOpt(0);
+  else if (k === '2' || k === 'B') chooseOpt(1);
+  else if (k === '3' || k === 'C') chooseOpt(2);
+  else if (k === '4' || k === 'D') chooseOpt(3);
+  else if (k === 'ENTER' || k === ' ') {
+    const q = sessionList[curIdx];
+    if (q && answers[q.id] !== undefined) { e.preventDefault(); nextQ(); }
+  }
+  else if (e.key === 'ArrowRight') nextQ();
+  else if (e.key === 'ArrowLeft') prevQ();
+});
+
+renderDashboard();
+</script>
+</body>
+</html>
